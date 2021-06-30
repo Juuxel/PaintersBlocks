@@ -84,6 +84,6 @@ public class PaintersItem extends BlockItem implements DyeableItem {
     }
 
     public static void setColor(ItemStack stack, DyeColor color) {
-        stack.getOrCreateSubTag(BLOCK_ENTITY_TAG_KEY).putInt(NbtKeys.COLOR, Colors.DYE_COLOR_RGB_VALUES.getInt(color));
+        ((DyeableItem) stack.getItem()).setColor(stack, Colors.DYE_COLOR_RGB_VALUES.getInt(color));
     }
 }
