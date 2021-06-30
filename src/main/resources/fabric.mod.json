@@ -1,38 +1,32 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "painters_blocks",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Painter's Blocks",
+  "description": "Adds a bunch of dyeable building blocks.",
   "authors": [
-    "Me!"
+    "Juuz"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Juuxel/PaintersBlocks",
+    "sources": "https://github.com/Juuxel/PaintersBlocks",
+    "issues": "https://github.com/Juuxel/PaintersBlocks/issues"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "MPL-2.0",
+  "icon": "assets/painters_blocks/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.fabricmc.example.ExampleMod"
-    ]
+    "main": ["juuxel.paintersblocks.PaintersBlocks"],
+    "client": ["juuxel.paintersblocks.client.PaintersBlocksClient"]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
     "minecraft": "1.17.x",
     "java": ">=16"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }
