@@ -8,7 +8,7 @@ package juuxel.paintersblocks.block;
 
 import juuxel.paintersblocks.block.entity.PaintersBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
-import juuxel.paintersblocks.item.PaintersItem;
+import juuxel.paintersblocks.item.PbDyeableItem;
 import juuxel.paintersblocks.util.NbtKeys;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -17,7 +17,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
@@ -49,12 +48,6 @@ public class PaintersBlock extends BlockWithEntity {
 
     @Override
     public void addStacksForDisplay(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        stacks.add(new ItemStack(this));
-
-        for (DyeColor color : DyeColor.values()) {
-            ItemStack stack = new ItemStack(this);
-            PaintersItem.setColor(stack, color);
-            stacks.add(stack);
-        }
+        PbDyeableItem.appendStacks(this, stacks);
     }
 }

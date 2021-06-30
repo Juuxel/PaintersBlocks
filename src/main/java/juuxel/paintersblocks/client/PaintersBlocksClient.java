@@ -9,6 +9,7 @@ package juuxel.paintersblocks.client;
 import juuxel.paintersblocks.block.PbBlocks;
 import juuxel.paintersblocks.block.entity.PaintersBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
+import juuxel.paintersblocks.item.PbItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.item.DyeableItem;
@@ -32,6 +33,11 @@ public final class PaintersBlocksClient implements ClientModInitializer {
         ColorProviderRegistry.ITEM.register(
             (stack, tintIndex) -> tintIndex == 0 ? ((DyeableItem) stack.getItem()).getColor(stack) : -1,
             PbBlocks.PAINTERS_BRICKS, PbBlocks.PAINTERS_TILES
+        );
+
+        ColorProviderRegistry.ITEM.register(
+            (stack, tintIndex) -> tintIndex == 1 ? ((DyeableItem) stack.getItem()).getColor(stack) : -1,
+            PbItems.SWATCH
         );
     }
 }

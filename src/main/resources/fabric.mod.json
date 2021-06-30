@@ -22,6 +22,7 @@
     "main": ["juuxel.paintersblocks.PaintersBlocks"],
     "client": ["juuxel.paintersblocks.client.PaintersBlocksClient"]
   },
+  "mixins": ["mixins.painters_blocks.json"],
 
   "depends": {
     "fabricloader": ">=0.11.3",

@@ -14,25 +14,21 @@ import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeItem;
-import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PaintersItem extends BlockItem implements DyeableItem {
+public class PaintersItem extends BlockItem implements PbDyeableItem {
     public static final int DEFAULT_COLOR = 0x8F8F8F;
-    private static final Int2ObjectMap<Item> DYES_BY_RGB = Util.make(new Int2ObjectOpenHashMap<>(), map -> {
+    static final Int2ObjectMap<Item> DYES_BY_RGB = Util.make(new Int2ObjectOpenHashMap<>(), map -> {
         for (DyeColor color : DyeColor.values()) {
             map.put(Colors.DYE_COLOR_RGB_VALUES.getInt(color), DyeItem.byColor(color));
         }
@@ -44,17 +40,12 @@ public class PaintersItem extends BlockItem implements DyeableItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if (hasColor(stack)) {
-            int color = getColor(stack);
-            @Nullable Item dye = DYES_BY_RGB.get(color);
-            String colorStr = Integer.toHexString(color);
-            MutableText text = dye != null
-                ? new TranslatableText("tooltip.painters_blocks.dye_color", colorStr, dye.getName())
-                : new TranslatableText("tooltip.painters_blocks.color", colorStr);
-            tooltip.add(text.styled(style -> style.withColor(color)));
-        } else {
-            tooltip.add(new TranslatableText("tooltip.painters_blocks.undyed").styled(style -> style.withItalic(true).withColor(Formatting.DARK_GRAY)));
-        }
+        appendColorTooltip(stack, tooltip);
+    }
+
+    @Override
+    public int getDefaultColor() {
+        return DEFAULT_COLOR;
     }
 
     @Override
@@ -66,7 +57,7 @@ public class PaintersItem extends BlockItem implements DyeableItem {
     @Override
     public int getColor(ItemStack stack) {
         @Nullable NbtCompound nbt = stack.getSubTag(BLOCK_ENTITY_TAG_KEY);
-        return nbt != null && nbt.contains(NbtKeys.COLOR, NbtElement.NUMBER_TYPE) ? nbt.getInt(NbtKeys.COLOR) : DEFAULT_COLOR;
+        return nbt != null && nbt.contains(NbtKeys.COLOR, NbtElement.NUMBER_TYPE) ? nbt.getInt(NbtKeys.COLOR) : getDefaultColor();
     }
 
     @Override
@@ -83,7 +74,4 @@ public class PaintersItem extends BlockItem implements DyeableItem {
         stack.getOrCreateSubTag(BLOCK_ENTITY_TAG_KEY).putInt(NbtKeys.COLOR, color);
     }
 
-    public static void setColor(ItemStack stack, DyeColor color) {
-        ((DyeableItem) stack.getItem()).setColor(stack, Colors.DYE_COLOR_RGB_VALUES.getInt(color));
-    }
 }

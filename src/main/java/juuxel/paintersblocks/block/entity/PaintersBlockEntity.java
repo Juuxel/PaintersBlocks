@@ -26,6 +26,11 @@ public class PaintersBlockEntity extends BlockEntity implements BlockEntityClien
         return color;
     }
 
+    public void setColor(int color) {
+        this.color = color;
+        markDirty();
+    }
+
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
