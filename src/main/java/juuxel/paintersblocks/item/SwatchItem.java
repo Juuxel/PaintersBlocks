@@ -14,7 +14,9 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -35,11 +37,28 @@ public class SwatchItem extends Item implements PbDyeableItem {
             ItemStack stack = context.getStack();
 
             if (hasColor(stack)) {
-                entity.setColor(getColor(stack));
-                entity.sync();
-                stack.decrement(1);
+                int color = getColor(stack);
+
+                if (color != entity.getColor()) {
+                    entity.setColor(getColor(stack));
+                    entity.sync();
+                    stack.decrement(1);
+                }
             } else {
-                setColor(stack, entity.getColor());
+                @Nullable var player = context.getPlayer();
+
+                if (player != null) {
+                    if (stack.getCount() == 1) {
+                        setColor(stack, entity.getColor());
+                    } else {
+                        stack.decrement(1);
+                        ItemStack dyed = new ItemStack(this);
+                        setColor(dyed, entity.getColor());
+                        player.getInventory().offerOrDrop(dyed);
+                    }
+
+                    player.sendMessage(new TranslatableText("item.dyed").formatted(Formatting.ITALIC), true);
+                }
             }
 
             return ActionResult.CONSUME;
