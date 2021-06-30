@@ -14,6 +14,10 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 
 public final class PaintersBlocks implements ModInitializer {
+    // TODO: Glowing variants?
+    // TODO: Painter's Stone?§
+    // TODO: Carved Painter's Stone
+    // TODO: Polished Painter's Stone
     public static final String ID = "painters_blocks";
 
     public static Identifier id(String path) {
