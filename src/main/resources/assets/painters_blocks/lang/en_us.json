@@ -1,4 +1,5 @@
 {
   "block.painters_blocks.painters_bricks": "Painter's Bricks",
-  "block.painters_blocks.painters_tiles": "Painter's Tiles"
+  "block.painters_blocks.painters_tiles": "Painter's Tiles",
+  "tooltip.painters_blocks.color": "#%s"
 }
