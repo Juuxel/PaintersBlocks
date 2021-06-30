@@ -1,6 +1,7 @@
 {
   "block.painters_blocks.painters_bricks": "Painter's Bricks",
   "block.painters_blocks.painters_tiles": "Painter's Tiles",
+  "itemGroup.painters_blocks.group": "Painter's Blocks",
   "tooltip.painters_blocks.color": "#%s",
   "tooltip.painters_blocks.dye_color": "#%s (%s)",
   "tooltip.painters_blocks.undyed": "Undyed"

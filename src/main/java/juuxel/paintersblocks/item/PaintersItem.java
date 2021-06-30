@@ -8,6 +8,7 @@ package juuxel.paintersblocks.item;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import juuxel.paintersblocks.util.Colors;
 import juuxel.paintersblocks.util.NbtKeys;
 import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
@@ -33,13 +34,7 @@ public class PaintersItem extends BlockItem implements DyeableItem {
     public static final int DEFAULT_COLOR = 0x8F8F8F;
     private static final Int2ObjectMap<Item> DYES_BY_RGB = Util.make(new Int2ObjectOpenHashMap<>(), map -> {
         for (DyeColor color : DyeColor.values()) {
-            float[] comps = color.getColorComponents();
-            int r = (int) (comps[0] * 255f);
-            int g = (int) (comps[1] * 255f);
-            int b = (int) (comps[2] * 255f);
-            int c = (r << 16) | (g << 8) | b;
-
-            map.put(c, DyeItem.byColor(color));
+            map.put(Colors.DYE_COLOR_RGB_VALUES.getInt(color), DyeItem.byColor(color));
         }
     });
 
@@ -86,5 +81,9 @@ public class PaintersItem extends BlockItem implements DyeableItem {
     @Override
     public void setColor(ItemStack stack, int color) {
         stack.getOrCreateSubTag(BLOCK_ENTITY_TAG_KEY).putInt(NbtKeys.COLOR, color);
+    }
+
+    public static void setColor(ItemStack stack, DyeColor color) {
+        stack.getOrCreateSubTag(BLOCK_ENTITY_TAG_KEY).putInt(NbtKeys.COLOR, Colors.DYE_COLOR_RGB_VALUES.getInt(color));
     }
 }

@@ -8,14 +8,17 @@ package juuxel.paintersblocks.block;
 
 import juuxel.paintersblocks.block.entity.PaintersBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
+import juuxel.paintersblocks.item.PaintersItem;
 import juuxel.paintersblocks.util.NbtKeys;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
@@ -42,5 +45,16 @@ public class PaintersBlock extends BlockWithEntity {
         world.getBlockEntity(pos, PbBlockEntities.PAINTERS_BLOCK)
             .ifPresent(entity -> stack.getOrCreateSubTag(BlockItem.BLOCK_ENTITY_TAG_KEY).putInt(NbtKeys.COLOR, entity.getColor()));
         return stack;
+    }
+
+    @Override
+    public void addStacksForDisplay(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        stacks.add(new ItemStack(this));
+
+        for (DyeColor color : DyeColor.values()) {
+            ItemStack stack = new ItemStack(this);
+            PaintersItem.setColor(stack, color);
+            stacks.add(stack);
+        }
     }
 }
