@@ -7,11 +7,17 @@
 package juuxel.paintersblocks.block;
 
 import juuxel.paintersblocks.block.entity.PaintersBlockEntity;
+import juuxel.paintersblocks.block.entity.PbBlockEntities;
+import juuxel.paintersblocks.util.NbtKeys;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
 public class PaintersBlock extends BlockWithEntity {
@@ -28,5 +34,13 @@ public class PaintersBlock extends BlockWithEntity {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new PaintersBlockEntity(pos, state);
+    }
+
+    @Override
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+        var stack = new ItemStack(this);
+        world.getBlockEntity(pos, PbBlockEntities.PAINTERS_BLOCK)
+            .ifPresent(entity -> stack.getOrCreateSubTag(BlockItem.BLOCK_ENTITY_TAG_KEY).putInt(NbtKeys.COLOR, entity.getColor()));
+        return stack;
     }
 }
