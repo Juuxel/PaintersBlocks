@@ -14,7 +14,7 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 
 public final class PaintersBlocks implements ModInitializer {
-    // TODO: Glowing variants?
+    // TODO: Glowing variants? nonOpaque solves it
     // TODO: Painter's Stone?§
     // TODO: Carved Painter's Stone
     // TODO: Polished Painter's Stone
