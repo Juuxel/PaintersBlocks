@@ -1,4 +1,5 @@
 {
   "block.painters_blocks.painters_bricks": "Maalarin tiilet",
-  "block.painters_blocks.painters_tiles": "Maalarin laatat"
+  "block.painters_blocks.painters_tiles": "Maalarin laatat",
+  "tooltip.painters_blocks.undyed": "Värjäämätön"
 }
