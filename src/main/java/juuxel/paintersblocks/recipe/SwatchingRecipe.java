@@ -2,8 +2,8 @@ package juuxel.paintersblocks.recipe;
 
 import juuxel.paintersblocks.item.PbDyeableItem;
 import juuxel.paintersblocks.item.PbItems;
+import juuxel.paintersblocks.item.SwatchItem;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
@@ -19,31 +19,27 @@ public class SwatchingRecipe extends SpecialCraftingRecipe {
 
     @Nullable
     private Inputs findInputs(CraftingInventory inventory) {
-        ItemStack cleanSwatch = ItemStack.EMPTY;
+        ItemStack clean = ItemStack.EMPTY;
         ItemStack dyed = ItemStack.EMPTY;
 
         for (int slot = 0; slot < inventory.size(); slot++) {
             ItemStack stack = inventory.getStack(slot);
             if (stack.isEmpty()) continue;
-            Item item = stack.getItem();
 
-            if (item == PbItems.SWATCH && !((DyeableItem) item).hasColor(stack)) {
-                if (!cleanSwatch.isEmpty()) return null; // duplicate clean swatch
-                cleanSwatch = stack;
-            } else if (item instanceof DyeableItem dyeable) {
-                if (!dyed.isEmpty()) {
-                    return null; // duplicate dyed item
-                } else if (dyeable.hasColor(stack)) {
-                    dyed = stack;
-                } else {
-                    return null; // just some random undyed item, we don't want it
-                }
+            Item item = stack.getItem();
+            if (item != PbItems.SWATCH) return null; // invalid item
+            SwatchItem swatch = (SwatchItem) item;
+
+            if (swatch.hasColor(stack)) {
+                if (!dyed.isEmpty()) return null; // duplicate dyed swatch
+                dyed = stack;
             } else {
-                return null; // invalid item
+                if (!clean.isEmpty()) return null; // duplicate clean swatch
+                clean = stack;
             }
         }
 
-        return !cleanSwatch.isEmpty() && !dyed.isEmpty() ? new Inputs(cleanSwatch, dyed) : null;
+        return !clean.isEmpty() && !dyed.isEmpty() ? new Inputs(clean, dyed) : null;
     }
 
     @Override
@@ -71,5 +67,5 @@ public class SwatchingRecipe extends SpecialCraftingRecipe {
         return PbRecipes.SWATCHING;
     }
 
-    private record Inputs(ItemStack cleanSwatch, ItemStack dyed) {}
+    private record Inputs(ItemStack clean, ItemStack dyed) {}
 }
