@@ -2,6 +2,14 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "painters_blocks:item/swatch",
-    "layer1": "painters_blocks:item/swatch_overlay"
-  }
+    "layer1": "painters_blocks:item/swatch_overlay_undyed"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "painters_blocks:dyed": 1
+      },
+      "model": "painters_blocks:item/swatch_dyed"
+    }
+  ]
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "painters_blocks:item/swatch",
+    "layer1": "painters_blocks:item/swatch_overlay"
+  }
+}

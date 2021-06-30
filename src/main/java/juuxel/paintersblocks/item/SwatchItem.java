@@ -59,4 +59,12 @@ public class SwatchItem extends Item implements PbDyeableItem {
             PbDyeableItem.appendStacks(this, stacks);
         }
     }
+
+    public int getColor(ItemStack stack, int tintIndex) {
+        if (hasColor(stack) && tintIndex == 1) {
+            return getColor(stack);
+        }
+
+        return -1;
+    }
 }
