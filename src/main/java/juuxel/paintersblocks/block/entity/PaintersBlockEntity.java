@@ -43,6 +43,7 @@ public class PaintersBlockEntity extends BlockEntity implements BlockEntityClien
         color = nbt.getInt(NbtKeys.COLOR);
 
         // rerender
+        // TODO: this is concern, can I remove it?
         world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
     }
 
