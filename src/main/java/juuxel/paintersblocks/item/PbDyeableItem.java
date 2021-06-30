@@ -36,6 +36,25 @@ public interface PbDyeableItem extends DyeableItem {
         return nbt != null && nbt.contains(COLOR_KEY, NbtElement.NUMBER_TYPE) ? nbt.getInt(COLOR_KEY) : getDefaultColor();
     }
 
+    @Override
+    default void removeColor(ItemStack stack) {
+        @Nullable NbtCompound nbt = stack.getSubTag(DISPLAY_KEY);
+
+        if (nbt != null && nbt.contains(COLOR_KEY)) {
+            nbt.remove(COLOR_KEY);
+
+            // Remove empty parent NBT
+            if (nbt.isEmpty()) {
+                stack.getTag().remove(DISPLAY_KEY);
+
+                // Remove empty root NBT
+                if (stack.getTag().isEmpty()) {
+                    stack.setTag(null);
+                }
+            }
+        }
+    }
+
     default void appendColorTooltip(ItemStack stack, List<Text> tooltip) {
         if (hasColor(stack)) {
             int color = getColor(stack);
@@ -52,6 +71,10 @@ public interface PbDyeableItem extends DyeableItem {
 
     static void setColor(ItemStack stack, DyeColor color) {
         ((DyeableItem) stack.getItem()).setColor(stack, Colors.DYE_COLOR_RGB_VALUES.getInt(color));
+    }
+
+    static void copyColor(ItemStack from, ItemStack to) {
+        ((DyeableItem) to.getItem()).setColor(to, ((DyeableItem) from.getItem()).getColor(from));
     }
 
     static void appendStacks(ItemConvertible item, DefaultedList<ItemStack> stacks) {

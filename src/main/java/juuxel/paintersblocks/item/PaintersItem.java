@@ -64,8 +64,18 @@ public class PaintersItem extends BlockItem implements PbDyeableItem {
     public void removeColor(ItemStack stack) {
         @Nullable NbtCompound nbt = stack.getSubTag(BLOCK_ENTITY_TAG_KEY);
 
-        if (nbt != null) {
+        if (nbt != null && nbt.contains(NbtKeys.COLOR)) {
             nbt.remove(NbtKeys.COLOR);
+
+            // Remove empty parent NBT
+            if (nbt.isEmpty()) {
+                stack.getTag().remove(BLOCK_ENTITY_TAG_KEY);
+
+                // Remove empty root NBT
+                if (stack.getTag().isEmpty()) {
+                    stack.setTag(null);
+                }
+            }
         }
     }
 
