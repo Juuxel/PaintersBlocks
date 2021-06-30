@@ -16,8 +16,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Util;
@@ -49,39 +47,12 @@ public class PaintersItem extends BlockItem implements PbDyeableItem {
     }
 
     @Override
-    public boolean hasColor(ItemStack stack) {
-        @Nullable NbtCompound nbt = stack.getSubTag(BLOCK_ENTITY_TAG_KEY);
-        return nbt != null && nbt.contains(NbtKeys.COLOR, NbtElement.NUMBER_TYPE);
+    public String getColorParentNbtKey() {
+        return BLOCK_ENTITY_TAG_KEY;
     }
 
     @Override
-    public int getColor(ItemStack stack) {
-        @Nullable NbtCompound nbt = stack.getSubTag(BLOCK_ENTITY_TAG_KEY);
-        return nbt != null && nbt.contains(NbtKeys.COLOR, NbtElement.NUMBER_TYPE) ? nbt.getInt(NbtKeys.COLOR) : getDefaultColor();
+    public String getColorNbtKey() {
+        return NbtKeys.COLOR;
     }
-
-    @Override
-    public void removeColor(ItemStack stack) {
-        @Nullable NbtCompound nbt = stack.getSubTag(BLOCK_ENTITY_TAG_KEY);
-
-        if (nbt != null && nbt.contains(NbtKeys.COLOR)) {
-            nbt.remove(NbtKeys.COLOR);
-
-            // Remove empty parent NBT
-            if (nbt.isEmpty()) {
-                stack.getTag().remove(BLOCK_ENTITY_TAG_KEY);
-
-                // Remove empty root NBT
-                if (stack.getTag().isEmpty()) {
-                    stack.setTag(null);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void setColor(ItemStack stack, int color) {
-        stack.getOrCreateSubTag(BLOCK_ENTITY_TAG_KEY).putInt(NbtKeys.COLOR, color);
-    }
-
 }

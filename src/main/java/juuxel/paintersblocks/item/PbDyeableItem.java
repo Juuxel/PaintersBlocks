@@ -30,22 +30,36 @@ public interface PbDyeableItem extends DyeableItem {
         return DEFAULT_COLOR;
     }
 
+    default String getColorParentNbtKey() {
+        return DISPLAY_KEY;
+    }
+
+    default String getColorNbtKey() {
+        return COLOR_KEY;
+    }
+
+    @Override
+    default boolean hasColor(ItemStack stack) {
+        @Nullable NbtCompound nbt = stack.getSubTag(getColorParentNbtKey());
+        return nbt != null && nbt.contains(getColorNbtKey(), NbtElement.NUMBER_TYPE);
+    }
+
     @Override
     default int getColor(ItemStack stack) {
-        @Nullable NbtCompound nbt = stack.getSubTag(DISPLAY_KEY);
-        return nbt != null && nbt.contains(COLOR_KEY, NbtElement.NUMBER_TYPE) ? nbt.getInt(COLOR_KEY) : getDefaultColor();
+        @Nullable NbtCompound nbt = stack.getSubTag(getColorParentNbtKey());
+        return nbt != null && nbt.contains(getColorNbtKey(), NbtElement.NUMBER_TYPE) ? nbt.getInt(getColorNbtKey()) : getDefaultColor();
     }
 
     @Override
     default void removeColor(ItemStack stack) {
-        @Nullable NbtCompound nbt = stack.getSubTag(DISPLAY_KEY);
+        @Nullable NbtCompound nbt = stack.getSubTag(getColorParentNbtKey());
 
-        if (nbt != null && nbt.contains(COLOR_KEY)) {
-            nbt.remove(COLOR_KEY);
+        if (nbt != null && nbt.contains(getColorNbtKey())) {
+            nbt.remove(getColorNbtKey());
 
             // Remove empty parent NBT
             if (nbt.isEmpty()) {
-                stack.getTag().remove(DISPLAY_KEY);
+                stack.getTag().remove(getColorParentNbtKey());
 
                 // Remove empty root NBT
                 if (stack.getTag().isEmpty()) {
@@ -53,6 +67,11 @@ public interface PbDyeableItem extends DyeableItem {
                 }
             }
         }
+    }
+
+    @Override
+    default void setColor(ItemStack stack, int color) {
+        stack.getOrCreateSubTag(getColorParentNbtKey()).putInt(getColorNbtKey(), color);
     }
 
     default void appendColorTooltip(ItemStack stack, List<Text> tooltip) {

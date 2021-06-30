@@ -9,12 +9,11 @@ package juuxel.paintersblocks.block;
 import juuxel.paintersblocks.block.entity.PaintersBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
 import juuxel.paintersblocks.item.PbDyeableItem;
-import juuxel.paintersblocks.util.NbtKeys;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.BlockItem;
+import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
@@ -42,7 +41,7 @@ public class PaintersBlock extends BlockWithEntity {
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         var stack = new ItemStack(this);
         world.getBlockEntity(pos, PbBlockEntities.PAINTERS_BLOCK)
-            .ifPresent(entity -> stack.getOrCreateSubTag(BlockItem.BLOCK_ENTITY_TAG_KEY).putInt(NbtKeys.COLOR, entity.getColor()));
+            .ifPresent(entity -> ((DyeableItem) stack.getItem()).setColor(stack, entity.getColor()));
         return stack;
     }
 
