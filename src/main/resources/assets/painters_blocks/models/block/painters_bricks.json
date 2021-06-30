@@ -1,6 +1,6 @@
 {
-  "parent": "painters_blocks:templates/painters_block",
+  "parent": "painters_blocks:block/templates/painters_block",
   "textures": {
-    "all": "painters_blocks:block/painters_blocks"
+    "all": "painters_blocks:block/painters_bricks"
   }
 }

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "coloration:painters_bricks",
+          "name": "painters_blocks:painters_bricks",
           "functions": [
             {
               "function": "minecraft:copy_nbt",
