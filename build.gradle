@@ -1,6 +1,7 @@
 plugins {
 	id 'fabric-loom' version '0.9-SNAPSHOT'
     id 'io.github.juuxel.loom-quiltflower' version '1.1.1'
+    id 'org.cadixdev.licenser' version '0.6.1'
 	id 'maven-publish'
 }
 
@@ -62,6 +63,10 @@ jar {
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
+}
+
+license {
+    header = file('HEADER.txt')
 }
 
 // configure the maven publication
