@@ -13,7 +13,7 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.registry.Registry;
 
 public final class PbBlockEntities {
-    public static final BlockEntityType<PaintersBlockEntity> PAINTERS_BLOCK = register("painters_block", FabricBlockEntityTypeBuilder.create(PaintersBlockEntity::new, PbBlocks.PAINTERS_BRICKS, PbBlocks.PAINTERS_TILES).build());
+    public static final BlockEntityType<PaintersBlockEntity> PAINTERS_BLOCK = register("painters_block", FabricBlockEntityTypeBuilder.create(PaintersBlockEntity::new, PbBlocks.all()).build());
 
     private static <T extends BlockEntityType<?>> T register(String id, T type) {
         return Registry.register(Registry.BLOCK_ENTITY_TYPE, PaintersBlocks.id(id), type);

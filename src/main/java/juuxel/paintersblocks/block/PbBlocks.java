@@ -15,16 +15,23 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
+import java.util.List;
 import java.util.function.BiFunction;
 
 public final class PbBlocks {
     public static final Block PAINTERS_BRICKS = register("painters_bricks", new PaintersBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICKS)), PaintersItem::new);
     public static final Block PAINTERS_TILES = register("painters_tiles", new PaintersBlock(AbstractBlock.Settings.copy(Blocks.STONE_BRICKS)), PaintersItem::new);
 
+    public static final List<Block> ALL_BLOCKS = List.of(PAINTERS_BRICKS, PAINTERS_TILES);
+
     private static Block register(String id, Block block, BiFunction<Block, Item.Settings, Item> item) {
         Registry.register(Registry.BLOCK, PaintersBlocks.id(id), block);
         Registry.register(Registry.ITEM, PaintersBlocks.id(id), item.apply(block, new Item.Settings().group(PbItems.GROUP)));
         return block;
+    }
+
+    public static Block[] all() {
+        return ALL_BLOCKS.toArray(new Block[0]);
     }
 
     public static void init() {

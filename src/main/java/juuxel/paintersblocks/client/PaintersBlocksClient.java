@@ -31,11 +31,11 @@ public final class PaintersBlocksClient implements ClientModInitializer {
             }
 
             return -1;
-        }, PbBlocks.PAINTERS_BRICKS, PbBlocks.PAINTERS_TILES);
+        }, PbBlocks.all());
 
         ColorProviderRegistry.ITEM.register(
             (stack, tintIndex) -> tintIndex == 0 ? ((DyeableItem) stack.getItem()).getColor(stack) : -1,
-            PbBlocks.PAINTERS_BRICKS, PbBlocks.PAINTERS_TILES
+            PbBlocks.all()
         );
 
         ColorProviderRegistry.ITEM.register(
