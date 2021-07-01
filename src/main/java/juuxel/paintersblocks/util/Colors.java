@@ -12,6 +12,9 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.Util;
 
 public final class Colors {
+    public static final int GENERIC_DEFAULT_COLOR = 0xFFFFFF;
+    public static final int STONE_DEFAULT_COLOR = 0x8F8F8F;
+
     public static final Object2IntMap<DyeColor> DYE_COLOR_RGB_VALUES = Util.make(new Object2IntOpenHashMap<>(), map -> {
         for (DyeColor color : DyeColor.values()) {
             map.put(color, toIntRgb(color.getColorComponents()));

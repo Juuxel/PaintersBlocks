@@ -25,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class PaintableItem extends BlockItem implements PbDyeableItem {
-    public static final int DEFAULT_COLOR = 0x8F8F8F;
     static final Int2ObjectMap<Item> DYES_BY_RGB = Util.make(new Int2ObjectOpenHashMap<>(), map -> {
         for (DyeColor color : DyeColor.values()) {
             map.put(Colors.DYE_COLOR_RGB_VALUES.getInt(color), DyeItem.byColor(color));
@@ -43,7 +42,7 @@ public class PaintableItem extends BlockItem implements PbDyeableItem {
 
     @Override
     public int getDefaultColor() {
-        return DEFAULT_COLOR;
+        return Colors.STONE_DEFAULT_COLOR;
     }
 
     @Override

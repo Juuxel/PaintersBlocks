@@ -24,10 +24,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public interface PbDyeableItem extends DyeableItem {
-    int DEFAULT_COLOR = 0xFFFFFF;
-
     default int getDefaultColor() {
-        return DEFAULT_COLOR;
+        return Colors.GENERIC_DEFAULT_COLOR;
     }
 
     default String getColorParentNbtKey() {
