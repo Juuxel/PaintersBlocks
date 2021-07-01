@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PaintersItem extends BlockItem implements PbDyeableItem {
+public class PaintableItem extends BlockItem implements PbDyeableItem {
     public static final int DEFAULT_COLOR = 0x8F8F8F;
     static final Int2ObjectMap<Item> DYES_BY_RGB = Util.make(new Int2ObjectOpenHashMap<>(), map -> {
         for (DyeColor color : DyeColor.values()) {
@@ -32,7 +32,7 @@ public class PaintersItem extends BlockItem implements PbDyeableItem {
         }
     });
 
-    public PaintersItem(Block block, Settings settings) {
+    public PaintableItem(Block block, Settings settings) {
         super(block, settings);
     }
 

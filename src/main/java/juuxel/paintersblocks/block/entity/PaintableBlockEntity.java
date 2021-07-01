@@ -6,7 +6,7 @@
 
 package juuxel.paintersblocks.block.entity;
 
-import juuxel.paintersblocks.item.PaintersItem;
+import juuxel.paintersblocks.item.PaintableItem;
 import juuxel.paintersblocks.util.NbtKeys;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.Block;
@@ -15,10 +15,10 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 
-public class PaintersBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
-    private int color = PaintersItem.DEFAULT_COLOR;
+public class PaintableBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
+    private int color = PaintableItem.DEFAULT_COLOR;
 
-    public PaintersBlockEntity(BlockPos pos, BlockState state) {
+    public PaintableBlockEntity(BlockPos pos, BlockState state) {
         super(PbBlockEntities.PAINTERS_BLOCK, pos, state);
     }
 

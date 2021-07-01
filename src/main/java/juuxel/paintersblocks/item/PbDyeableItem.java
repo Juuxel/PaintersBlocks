@@ -77,7 +77,7 @@ public interface PbDyeableItem extends DyeableItem {
     default void appendColorTooltip(ItemStack stack, List<Text> tooltip) {
         if (hasColor(stack)) {
             int color = getColor(stack);
-            @Nullable Item dye = PaintersItem.DYES_BY_RGB.get(color);
+            @Nullable Item dye = PaintableItem.DYES_BY_RGB.get(color);
             String colorStr = Integer.toHexString(color);
             MutableText text = dye != null
                 ? new TranslatableText("tooltip.painters_blocks.dye_color", colorStr, dye.getName())

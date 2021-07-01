@@ -7,7 +7,7 @@
 package juuxel.paintersblocks.block;
 
 import juuxel.paintersblocks.PaintersBlocks;
-import juuxel.paintersblocks.item.PaintersItem;
+import juuxel.paintersblocks.item.PaintableItem;
 import juuxel.paintersblocks.item.PbItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -20,10 +20,10 @@ import java.util.function.BiFunction;
 import static net.minecraft.block.AbstractBlock.Settings.copy;
 
 public final class PbBlocks {
-    public static final Block PAINTERS_BRICKS = register("painters_bricks", new PaintersBlock(copy(Blocks.STONE_BRICKS)), PaintersItem::new);
-    public static final Block PAINTERS_TILES = register("painters_tiles", new PaintersBlock(copy(Blocks.STONE_BRICKS)), PaintersItem::new);
-    public static final Block POLISHED_PAINTERS_STONE = register("polished_painters_stone", new PaintersBlock(copy(Blocks.STONE_BRICKS)), PaintersItem::new);
-    public static final Block CHISELED_PAINTERS_STONE = register("chiseled_painters_stone", new PaintersBlock(copy(Blocks.STONE_BRICKS)), PaintersItem::new);
+    public static final Block PAINTERS_BRICKS = register("painters_bricks", new PaintableBlock(copy(Blocks.STONE_BRICKS)), PaintableItem::new);
+    public static final Block PAINTERS_TILES = register("painters_tiles", new PaintableBlock(copy(Blocks.STONE_BRICKS)), PaintableItem::new);
+    public static final Block POLISHED_PAINTERS_STONE = register("polished_painters_stone", new PaintableBlock(copy(Blocks.STONE_BRICKS)), PaintableItem::new);
+    public static final Block CHISELED_PAINTERS_STONE = register("chiseled_painters_stone", new PaintableBlock(copy(Blocks.STONE_BRICKS)), PaintableItem::new);
 
     public static final List<Block> ALL_BLOCKS = List.of(PAINTERS_BRICKS, PAINTERS_TILES, POLISHED_PAINTERS_STONE, CHISELED_PAINTERS_STONE);
 

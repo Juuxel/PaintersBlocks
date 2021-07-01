@@ -8,7 +8,7 @@ package juuxel.paintersblocks.client;
 
 import juuxel.paintersblocks.PaintersBlocks;
 import juuxel.paintersblocks.block.PbBlocks;
-import juuxel.paintersblocks.block.entity.PaintersBlockEntity;
+import juuxel.paintersblocks.block.entity.PaintableBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
 import juuxel.paintersblocks.item.PbItems;
 import juuxel.paintersblocks.item.SwatchItem;
@@ -23,7 +23,7 @@ public final class PaintersBlocksClient implements ClientModInitializer {
     public void onInitializeClient() {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> {
             if (tintIndex == 0 && world != null) {
-                @Nullable PaintersBlockEntity entity = world.getBlockEntity(pos, PbBlockEntities.PAINTERS_BLOCK).orElse(null);
+                @Nullable PaintableBlockEntity entity = world.getBlockEntity(pos, PbBlockEntities.PAINTERS_BLOCK).orElse(null);
 
                 if (entity != null) {
                     return entity.getColor();

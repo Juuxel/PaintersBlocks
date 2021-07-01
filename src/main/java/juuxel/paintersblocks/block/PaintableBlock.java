@@ -6,7 +6,7 @@
 
 package juuxel.paintersblocks.block;
 
-import juuxel.paintersblocks.block.entity.PaintersBlockEntity;
+import juuxel.paintersblocks.block.entity.PaintableBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
 import juuxel.paintersblocks.item.PbDyeableItem;
 import net.minecraft.block.BlockRenderType;
@@ -21,8 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 
-public class PaintersBlock extends BlockWithEntity {
-    public PaintersBlock(Settings settings) {
+public class PaintableBlock extends BlockWithEntity {
+    public PaintableBlock(Settings settings) {
         super(settings);
     }
 
@@ -34,7 +34,7 @@ public class PaintersBlock extends BlockWithEntity {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new PaintersBlockEntity(pos, state);
+        return new PaintableBlockEntity(pos, state);
     }
 
     @Override

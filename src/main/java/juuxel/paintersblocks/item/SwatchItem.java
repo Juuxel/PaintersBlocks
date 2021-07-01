@@ -6,7 +6,7 @@
 
 package juuxel.paintersblocks.item;
 
-import juuxel.paintersblocks.block.entity.PaintersBlockEntity;
+import juuxel.paintersblocks.block.entity.PaintableBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
@@ -30,7 +30,7 @@ public class SwatchItem extends Item implements PbDyeableItem {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        @Nullable PaintersBlockEntity entity = context.getWorld().getBlockEntity(context.getBlockPos(), PbBlockEntities.PAINTERS_BLOCK).orElse(null);
+        @Nullable PaintableBlockEntity entity = context.getWorld().getBlockEntity(context.getBlockPos(), PbBlockEntities.PAINTERS_BLOCK).orElse(null);
 
         if (entity != null) {
             if (context.getWorld().isClient()) return ActionResult.SUCCESS;
