@@ -1,6 +1,8 @@
 {
+  "block.painters_blocks.chiseled_painters_stone": "Kaiverrettu maalarin kivi",
   "block.painters_blocks.painters_bricks": "Maalarin tiilet",
   "block.painters_blocks.painters_tiles": "Maalarin laatat",
+  "block.painters_blocks.polished_painters_stone": "Kiillotettu maalarin kivi",
   "item.painters_blocks.swatch": "Maalinäyte",
   "tooltip.painters_blocks.undyed": "Värjäämätön"
 }

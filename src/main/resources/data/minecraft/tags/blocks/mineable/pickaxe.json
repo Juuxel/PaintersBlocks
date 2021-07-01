@@ -1,7 +1,9 @@
 {
   "replace": false,
   "values": [
+    "painters_blocks:chiseled_painters_stone",
     "painters_blocks:painters_bricks",
-    "painters_blocks:painters_tiles"
+    "painters_blocks:painters_tiles",
+    "painters_blocks:polished_painters_stone"
   ]
 }

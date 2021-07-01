@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:stone"
+  },
+  "result": "painters_blocks:polished_painters_stone",
+  "count": 1
+}

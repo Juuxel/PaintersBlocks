@@ -1,6 +1,8 @@
 {
+  "block.painters_blocks.chiseled_painters_stone": "Chiseled Painter's Stone",
   "block.painters_blocks.painters_bricks": "Painter's Bricks",
   "block.painters_blocks.painters_tiles": "Painter's Tiles",
+  "block.painters_blocks.polished_painters_stone": "Polished Painter's Stone",
   "item.painters_blocks.swatch": "Paint Swatch",
   "itemGroup.painters_blocks.group": "Painter's Blocks",
   "tooltip.painters_blocks.color": "#%s",
