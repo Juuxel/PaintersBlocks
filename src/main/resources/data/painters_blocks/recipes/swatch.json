@@ -1,0 +1,20 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    " D ",
+    "D#D",
+    " D "
+  ],
+  "key": {
+    "D": {
+      "tag": "c:dyes"
+    },
+    "#": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "painters_blocks:swatch",
+    "count": 4
+  }
+}
