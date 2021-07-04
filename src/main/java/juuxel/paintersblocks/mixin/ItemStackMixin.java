@@ -6,7 +6,7 @@
 
 package juuxel.paintersblocks.mixin;
 
-import juuxel.paintersblocks.item.PbItems;
+import juuxel.paintersblocks.item.PbDyeableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +30,7 @@ abstract class ItemStackMixin {
         slice = @Slice(from = @At(value = "FIELD", target = "Lnet/minecraft/item/ItemStack$TooltipSection;DYE:Lnet/minecraft/item/ItemStack$TooltipSection;"))
     )
     private boolean hideDyeSectionForSwatches(int flags, ItemStack.TooltipSection section) {
-        if (getItem() == PbItems.SWATCH) {
+        if (getItem() instanceof PbDyeableItem) {
             return false;
         }
 

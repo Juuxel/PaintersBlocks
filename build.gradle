@@ -26,6 +26,15 @@ repositories {
             includeGroup "grondag"
         }
     }
+
+   maven {
+       name = "BuildCraft"
+       url = "https://mod-buildcraft.com/maven"
+
+       content {
+           includeGroup "alexiil.mc.lib"
+       }
+   }
 }
 
 dependencies {
@@ -40,6 +49,7 @@ dependencies {
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
     modImplementation include("grondag:jmx-mc117:$project.jmx_version")
+    modImplementation include("alexiil.mc.lib:libmultipart-all:$project.libmultipart_version")
 }
 
 processResources {

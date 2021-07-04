@@ -6,13 +6,18 @@
 
 package juuxel.paintersblocks.item;
 
+import alexiil.mc.lib.multipart.api.PartDefinition;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableList;
 import juuxel.paintersblocks.PaintersBlocks;
 import juuxel.paintersblocks.block.PbBlocks;
+import juuxel.paintersblocks.part.PbParts;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
@@ -20,6 +25,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
 
 import java.util.List;
+import java.util.Map;
 
 public final class PbItems {
     public static final ItemGroup GROUP = FabricItemGroupBuilder.build(PaintersBlocks.id("group"), () -> {
@@ -28,17 +34,41 @@ public final class PbItems {
         return stack;
     });
 
-    public static final Item SWATCH = register("swatch", new SwatchItem(new Item.Settings().group(GROUP)));
+    public static Item.Settings settings() {
+        return new Item.Settings().group(GROUP);
+    }
+
+    public static final Item SWATCH = register("swatch", new SwatchItem(settings()));
+    public static final PartItem PAINTERS_BRICK_SLAB = register("painters_brick_slab", new PaintableSlabItem(settings(), PbParts.PAINTERS_BRICK_SLAB));
 
     public static final List<Item> ALL_DYEABLE_ITEMS = Util.make(ImmutableList.<Item>builder(), builder -> {
         for (Block block : PbBlocks.ALL_BLOCKS) {
             builder.add(block.asItem());
         }
 
-        builder.add(SWATCH);
+        builder.add(SWATCH, PAINTERS_BRICK_SLAB);
     }).build();
 
-    private static Item register(String id, Item item) {
+    private static final List<ItemConvertible> ALL_BLOCK_LIKE_ITEMS = ImmutableList.<ItemConvertible>builder()
+        .addAll(PbBlocks.ALL_BLOCKS)
+        .add(PAINTERS_BRICK_SLAB)
+        .build();
+
+    public static final BiMap<PartDefinition, Item> PART_ITEMS_BY_DEFINITION = Util.make(ImmutableBiMap.<PartDefinition, Item>builder(), builder -> {
+        PartItem[] partItems = {
+            PAINTERS_BRICK_SLAB,
+        };
+
+        for (PartItem item : partItems) {
+            builder.put(item.definition, item);
+        }
+    }).build();
+
+    public static ItemConvertible[] blockLikeItems() {
+        return ALL_BLOCK_LIKE_ITEMS.toArray(new ItemConvertible[0]);
+    }
+
+    private static <I extends Item> I register(String id, I item) {
         return Registry.register(Registry.ITEM, PaintersBlocks.id(id), item);
     }
 

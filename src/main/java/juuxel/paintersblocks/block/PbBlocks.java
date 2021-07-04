@@ -43,7 +43,7 @@ public final class PbBlocks {
 
     private static Block register(String id, Block block, BiFunction<Block, Item.Settings, Item> item) {
         Registry.register(Registry.BLOCK, PaintersBlocks.id(id), block);
-        Registry.register(Registry.ITEM, PaintersBlocks.id(id), item.apply(block, new Item.Settings().group(PbItems.GROUP)));
+        Registry.register(Registry.ITEM, PaintersBlocks.id(id), item.apply(block, PbItems.settings()));
         return block;
     }
 
