@@ -13,26 +13,19 @@ import com.google.common.collect.ImmutableList;
 import juuxel.paintersblocks.PaintersBlocks;
 import juuxel.paintersblocks.block.PbBlocks;
 import juuxel.paintersblocks.part.PbParts;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
 
 import java.util.List;
 
 public final class PbItems {
-    public static final ItemGroup GROUP = FabricItemGroupBuilder.build(PaintersBlocks.id("group"), () -> {
-        ItemStack stack = new ItemStack(PbBlocks.PAINTERS_BRICKS);
-        PbDyeableItem.setColor(stack, DyeColor.LIME);
-        return stack;
-    });
+    public static final ItemGroup GROUP = PbBlocks.ITEM_GROUP;
 
-    public static Item.Settings settings() {
+    private static Item.Settings settings() {
         return new Item.Settings().group(GROUP);
     }
 

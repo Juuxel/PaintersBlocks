@@ -24,10 +24,10 @@ public final class PaintersBlocks implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        PbBlocks.init();
         PbParts.init();
         PbItems.init();
         PbItemTags.init();
-        PbBlocks.init();
         PbBlockEntities.init();
         PbRecipes.init();
     }
