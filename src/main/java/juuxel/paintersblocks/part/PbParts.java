@@ -22,8 +22,6 @@ public final class PbParts {
     public static final PartDefinition PAINTERS_BRICK_SLAB = register("painters_brick_slab", PaintableSlabPart::new, PaintableSlabPart::new);
     public static final PartDefinition PAINTERS_TILE_SLAB = register("painters_tile_slab", PaintableSlabPart::new, PaintableSlabPart::new);
     public static final PartDefinition POLISHED_PAINTERS_STONE_SLAB = register("polished_painters_stone_slab", PaintableSlabPart::new, PaintableSlabPart::new);
-    public static final PartDefinition GLOWING_PAINTERS_BRICK_SLAB = register("glowing_painters_brick_slab", PaintableSlabPart::new, PaintableSlabPart::new);
-    public static final PartDefinition GLOWING_PAINTERS_TILE_SLAB = register("glowing_painters_tile_slab", PaintableSlabPart::new, PaintableSlabPart::new);
 
     public static final Supplier<Map<PartDefinition, Block>> PARTS_TO_BLOCKS = Suppliers.memoize(
         () -> ImmutableMap.<PartDefinition, Block>builder()
@@ -31,8 +29,6 @@ public final class PbParts {
             .put(PAINTERS_BRICK_SLAB, PbBlocks.PAINTERS_BRICKS)
             .put(PAINTERS_TILE_SLAB, PbBlocks.PAINTERS_TILES)
             .put(POLISHED_PAINTERS_STONE_SLAB, PbBlocks.POLISHED_PAINTERS_STONE)
-            .put(GLOWING_PAINTERS_BRICK_SLAB, PbBlocks.GLOWING_PAINTERS_BRICKS)
-            .put(GLOWING_PAINTERS_TILE_SLAB, PbBlocks.GLOWING_PAINTERS_TILES)
             .build()
     );
 
@@ -40,9 +36,7 @@ public final class PbParts {
         PAINTERS_STONE_SLAB,
         PAINTERS_BRICK_SLAB,
         PAINTERS_TILE_SLAB,
-        POLISHED_PAINTERS_STONE_SLAB,
-        GLOWING_PAINTERS_BRICK_SLAB,
-        GLOWING_PAINTERS_TILE_SLAB
+        POLISHED_PAINTERS_STONE_SLAB
     );
 
     private static PartDefinition register(String id, PartDefinition.IPartNbtReader nbtReader, PartDefinition.IPartNetLoader netLoader) {

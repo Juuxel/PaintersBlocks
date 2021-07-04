@@ -14,7 +14,6 @@ import juuxel.paintersblocks.PaintersBlocks;
 import juuxel.paintersblocks.block.PbBlocks;
 import juuxel.paintersblocks.part.PbParts;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.block.Block;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
@@ -42,8 +41,6 @@ public final class PbItems {
     public static final PartItem PAINTERS_BRICK_SLAB = register("painters_brick_slab", new PaintableSlabItem(settings(), PbParts.PAINTERS_BRICK_SLAB));
     public static final PartItem PAINTERS_TILE_SLAB = register("painters_tile_slab", new PaintableSlabItem(settings(), PbParts.PAINTERS_TILE_SLAB));
     public static final PartItem POLISHED_PAINTERS_STONE_SLAB = register("polished_painters_stone_slab", new PaintableSlabItem(settings(), PbParts.POLISHED_PAINTERS_STONE_SLAB));
-    public static final PartItem GLOWING_PAINTERS_BRICK_SLAB = register("glowing_painters_brick_slab", new PaintableSlabItem(settings(), PbParts.GLOWING_PAINTERS_BRICK_SLAB));
-    public static final PartItem GLOWING_PAINTERS_TILE_SLAB = register("glowing_painters_tile_slab", new PaintableSlabItem(settings(), PbParts.GLOWING_PAINTERS_TILE_SLAB));
 
     private static final List<ItemConvertible> ALL_BLOCK_LIKE_ITEMS = ImmutableList.<ItemConvertible>builder()
         .addAll(PbBlocks.ALL_BLOCKS)
@@ -51,8 +48,6 @@ public final class PbItems {
         .add(PAINTERS_BRICK_SLAB)
         .add(PAINTERS_TILE_SLAB)
         .add(POLISHED_PAINTERS_STONE_SLAB)
-        .add(GLOWING_PAINTERS_BRICK_SLAB)
-        .add(GLOWING_PAINTERS_TILE_SLAB)
         .build();
 
     public static final List<Item> ALL_DYEABLE_ITEMS = Util.make(ImmutableList.<Item>builder(), builder -> {
@@ -68,9 +63,7 @@ public final class PbItems {
             PAINTERS_STONE_SLAB,
             PAINTERS_BRICK_SLAB,
             PAINTERS_TILE_SLAB,
-            POLISHED_PAINTERS_STONE_SLAB,
-            GLOWING_PAINTERS_BRICK_SLAB,
-            GLOWING_PAINTERS_TILE_SLAB,
+            POLISHED_PAINTERS_STONE_SLAB
         };
 
         for (PartItem item : partItems) {
