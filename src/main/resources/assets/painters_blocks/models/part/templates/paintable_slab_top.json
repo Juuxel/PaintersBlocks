@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
+    "side": "#all",
     "particle": "#all"
   },
   "elements": [
@@ -10,10 +11,10 @@
       "faces": {
         "down": { "texture": "#all", "tintindex": 0 },
         "up": { "texture": "#all", "cullface": "up", "tintindex": 0 },
-        "north": { "texture": "#all", "cullface": "north", "tintindex": 0 },
-        "south": { "texture": "#all", "cullface": "south", "tintindex": 0 },
-        "west": { "texture": "#all", "cullface": "west", "tintindex": 0 },
-        "east": { "texture": "#all", "cullface": "east", "tintindex": 0 }
+        "north": { "texture": "#side", "cullface": "north", "tintindex": 0 },
+        "south": { "texture": "#side", "cullface": "south", "tintindex": 0 },
+        "west": { "texture": "#side", "cullface": "west", "tintindex": 0 },
+        "east": { "texture": "#side", "cullface": "east", "tintindex": 0 }
       }
     }
   ]

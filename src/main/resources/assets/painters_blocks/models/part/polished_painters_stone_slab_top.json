@@ -1,6 +1,7 @@
 {
   "parent": "painters_blocks:part/templates/paintable_slab_top",
   "textures": {
-    "all": "painters_blocks:block/polished_painters_stone"
+    "all": "painters_blocks:block/polished_painters_stone",
+    "side": "painters_blocks:block/polished_painters_stone_slab_side"
   }
 }
