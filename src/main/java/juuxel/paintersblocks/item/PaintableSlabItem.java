@@ -93,6 +93,8 @@ public class PaintableSlabItem extends PartItem implements PbDyeableItem {
 
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        PbDyeableItem.appendStacks(this, stacks);
+        if (isIn(group)) {
+            PbDyeableItem.appendStacks(this, stacks);
+        }
     }
 }
