@@ -30,6 +30,6 @@
     "minecraft": "1.17.x",
     "java": ">=16",
     "json-model-extensions": "^1.22.200",
-    "libmultipart": ">=0.6.0"
+    "libmultipart": ">=0.6.1"
   }
 }
