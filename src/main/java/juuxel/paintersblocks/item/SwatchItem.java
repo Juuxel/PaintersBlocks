@@ -9,6 +9,8 @@ package juuxel.paintersblocks.item;
 import juuxel.paintersblocks.block.entity.PaintableBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -33,35 +35,7 @@ public class SwatchItem extends Item implements PbDyeableItem {
         @Nullable PaintableBlockEntity entity = context.getWorld().getBlockEntity(context.getBlockPos(), PbBlockEntities.PAINTERS_BLOCK).orElse(null);
 
         if (entity != null) {
-            if (context.getWorld().isClient()) return ActionResult.SUCCESS;
-            ItemStack stack = context.getStack();
-
-            if (hasColor(stack)) {
-                int color = getColor(stack);
-
-                if (color != entity.getColor()) {
-                    entity.setColor(getColor(stack));
-                    entity.sync();
-                    stack.decrement(1);
-                }
-            } else {
-                @Nullable var player = context.getPlayer();
-
-                if (player != null) {
-                    if (stack.getCount() == 1) {
-                        setColor(stack, entity.getColor());
-                    } else {
-                        stack.decrement(1);
-                        ItemStack dyed = new ItemStack(this);
-                        setColor(dyed, entity.getColor());
-                        player.getInventory().offerOrDrop(dyed);
-                    }
-
-                    player.sendMessage(new TranslatableText("item.dyed").formatted(Formatting.ITALIC), true);
-                }
-            }
-
-            return ActionResult.CONSUME;
+            return useOnDyeable(context.getWorld(), context.getStack(), entity, context.getPlayer());
         }
 
         return ActionResult.PASS;
@@ -85,5 +59,40 @@ public class SwatchItem extends Item implements PbDyeableItem {
         }
 
         return -1;
+    }
+
+    public static ActionResult useOnDyeable(World world, ItemStack stack, DyeTarget target, @Nullable PlayerEntity player) {
+        if (world.isClient()) return ActionResult.SUCCESS;
+        DyeableItem item = (DyeableItem) stack.getItem();
+
+        if (item.hasColor(stack)) {
+            int color = item.getColor(stack);
+
+            if (color != target.getColor()) {
+                target.setColorAndSync(item.getColor(stack));
+
+                if (player != null && !player.getAbilities().creativeMode) {
+                    stack.decrement(1);
+                }
+            }
+        } else if (player != null) {
+            if (stack.getCount() == 1) {
+                item.setColor(stack, target.getColor());
+            } else {
+                stack.decrement(1);
+                ItemStack dyed = new ItemStack(stack.getItem());
+                item.setColor(dyed, target.getColor());
+                player.getInventory().offerOrDrop(dyed);
+            }
+
+            player.sendMessage(new TranslatableText("item.dyed").formatted(Formatting.ITALIC), true);
+        }
+
+        return ActionResult.CONSUME;
+    }
+
+    public interface DyeTarget {
+        int getColor();
+        void setColorAndSync(int color);
     }
 }

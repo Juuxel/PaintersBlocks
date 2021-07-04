@@ -7,14 +7,18 @@
 package juuxel.paintersblocks.part;
 
 import alexiil.mc.lib.multipart.api.AbstractPart;
+import alexiil.mc.lib.multipart.api.MultipartEventBus;
 import alexiil.mc.lib.multipart.api.MultipartHolder;
 import alexiil.mc.lib.multipart.api.PartDefinition;
+import alexiil.mc.lib.multipart.api.event.PartAddedEvent;
+import alexiil.mc.lib.multipart.api.property.MultipartProperties;
 import alexiil.mc.lib.multipart.api.render.PartModelKey;
 import alexiil.mc.lib.net.IMsgReadCtx;
 import alexiil.mc.lib.net.IMsgWriteCtx;
 import alexiil.mc.lib.net.InvalidInputDataException;
 import alexiil.mc.lib.net.NetByteBuf;
 import juuxel.paintersblocks.item.PbItems;
+import juuxel.paintersblocks.item.SwatchItem;
 import juuxel.paintersblocks.util.Colors;
 import juuxel.paintersblocks.util.NbtKeys;
 import net.minecraft.block.Block;
@@ -24,12 +28,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.shape.VoxelShape;
@@ -37,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
 
 // TODO: Particles aren't colored correctly.
 // TODO: No sprinting particles: https://github.com/AlexIIL/LibMultiPart/issues/30
-public class PaintableSlabPart extends AbstractPart {
+public class PaintableSlabPart extends AbstractPart implements SwatchItem.DyeTarget {
     private static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
     private static final VoxelShape TOP_SHAPE = Block.createCuboidShape(0, 8, 0, 16, 16, 16);
 
@@ -74,6 +75,7 @@ public class PaintableSlabPart extends AbstractPart {
         modelKey = new PaintableSlabModelKey(definition, half, color);
     }
 
+    @Override
     public int getColor() {
         return color;
     }
@@ -83,6 +85,7 @@ public class PaintableSlabPart extends AbstractPart {
         rebuildModelKey();
     }
 
+    @Override
     public void setColorAndSync(int color) {
         setColor(color);
 
@@ -97,36 +100,8 @@ public class PaintableSlabPart extends AbstractPart {
     public ActionResult onUse(PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack stack = player.getStackInHand(hand);
 
-        // TODO: Remove this disgusting duplication
         if (stack.isOf(PbItems.SWATCH)) {
-            if (player.world.isClient()) return ActionResult.SUCCESS;
-            DyeableItem item = (DyeableItem) stack.getItem();
-
-            if (item.hasColor(stack)) {
-                int color = item.getColor(stack);
-
-                if (color != getColor()) {
-                    setColorAndSync(item.getColor(stack));
-                    holder.getContainer().getMultipartBlockEntity().markDirty();
-
-                    if (!player.getAbilities().creativeMode) {
-                        stack.decrement(1);
-                    }
-                }
-            } else {
-                if (stack.getCount() == 1) {
-                    item.setColor(stack, getColor());
-                } else {
-                    stack.decrement(1);
-                    ItemStack dyed = new ItemStack(stack.getItem());
-                    item.setColor(dyed, getColor());
-                    player.getInventory().offerOrDrop(dyed);
-                }
-
-                player.sendMessage(new TranslatableText("item.dyed").formatted(Formatting.ITALIC), true);
-            }
-
-            return ActionResult.CONSUME;
+            return SwatchItem.useOnDyeable(holder.getContainer().getMultipartWorld(), stack, this, player);
         }
 
         return ActionResult.PASS;
@@ -149,11 +124,25 @@ public class PaintableSlabPart extends AbstractPart {
     }
 
     @Override
-    public void addDrops(ItemDropTarget target, LootContext context) {
+    public ItemStack getPickStack() {
+        // TODO: Make drops data-driven (https://github.com/AlexIIL/LibMultiPart/issues/31)
         Item item = PbItems.PART_ITEMS_BY_DEFINITION.get(definition);
         ItemStack stack = new ItemStack(item);
         ((DyeableItem) item).setColor(stack, color);
-        target.drop(stack);
+        return stack;
+    }
+
+    @Override
+    public void onAdded(MultipartEventBus bus) {
+        super.onAdded(bus);
+
+        int luminance = getClosestBlockState().getLuminance();
+        if (luminance != 0) {
+            bus.addListener(
+                this, PartAddedEvent.class,
+                event -> holder.getContainer().getProperties().setValue(this, MultipartProperties.LIGHT_VALUE, luminance)
+            );
+        }
     }
 
     @Override

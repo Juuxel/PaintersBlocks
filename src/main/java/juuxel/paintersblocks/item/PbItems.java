@@ -25,7 +25,6 @@ import net.minecraft.util.Util;
 import net.minecraft.util.registry.Registry;
 
 import java.util.List;
-import java.util.Map;
 
 public final class PbItems {
     public static final ItemGroup GROUP = FabricItemGroupBuilder.build(PaintersBlocks.id("group"), () -> {
@@ -39,24 +38,39 @@ public final class PbItems {
     }
 
     public static final Item SWATCH = register("swatch", new SwatchItem(settings()));
+    public static final PartItem PAINTERS_STONE_SLAB = register("painters_stone_slab", new PaintableSlabItem(settings(), PbParts.PAINTERS_STONE_SLAB));
     public static final PartItem PAINTERS_BRICK_SLAB = register("painters_brick_slab", new PaintableSlabItem(settings(), PbParts.PAINTERS_BRICK_SLAB));
-
-    public static final List<Item> ALL_DYEABLE_ITEMS = Util.make(ImmutableList.<Item>builder(), builder -> {
-        for (Block block : PbBlocks.ALL_BLOCKS) {
-            builder.add(block.asItem());
-        }
-
-        builder.add(SWATCH, PAINTERS_BRICK_SLAB);
-    }).build();
+    public static final PartItem PAINTERS_TILE_SLAB = register("painters_tile_slab", new PaintableSlabItem(settings(), PbParts.PAINTERS_TILE_SLAB));
+    public static final PartItem POLISHED_PAINTERS_STONE_SLAB = register("polished_painters_stone_slab", new PaintableSlabItem(settings(), PbParts.POLISHED_PAINTERS_STONE_SLAB));
+    public static final PartItem GLOWING_PAINTERS_BRICK_SLAB = register("glowing_painters_brick_slab", new PaintableSlabItem(settings(), PbParts.GLOWING_PAINTERS_BRICK_SLAB));
+    public static final PartItem GLOWING_PAINTERS_TILE_SLAB = register("glowing_painters_tile_slab", new PaintableSlabItem(settings(), PbParts.GLOWING_PAINTERS_TILE_SLAB));
 
     private static final List<ItemConvertible> ALL_BLOCK_LIKE_ITEMS = ImmutableList.<ItemConvertible>builder()
         .addAll(PbBlocks.ALL_BLOCKS)
+        .add(PAINTERS_STONE_SLAB)
         .add(PAINTERS_BRICK_SLAB)
+        .add(PAINTERS_TILE_SLAB)
+        .add(POLISHED_PAINTERS_STONE_SLAB)
+        .add(GLOWING_PAINTERS_BRICK_SLAB)
+        .add(GLOWING_PAINTERS_TILE_SLAB)
         .build();
+
+    public static final List<Item> ALL_DYEABLE_ITEMS = Util.make(ImmutableList.<Item>builder(), builder -> {
+        for (ItemConvertible item : ALL_BLOCK_LIKE_ITEMS) {
+            builder.add(item.asItem());
+        }
+
+        builder.add(SWATCH);
+    }).build();
 
     public static final BiMap<PartDefinition, Item> PART_ITEMS_BY_DEFINITION = Util.make(ImmutableBiMap.<PartDefinition, Item>builder(), builder -> {
         PartItem[] partItems = {
+            PAINTERS_STONE_SLAB,
             PAINTERS_BRICK_SLAB,
+            PAINTERS_TILE_SLAB,
+            POLISHED_PAINTERS_STONE_SLAB,
+            GLOWING_PAINTERS_BRICK_SLAB,
+            GLOWING_PAINTERS_TILE_SLAB,
         };
 
         for (PartItem item : partItems) {

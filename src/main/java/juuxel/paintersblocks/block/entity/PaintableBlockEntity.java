@@ -6,6 +6,7 @@
 
 package juuxel.paintersblocks.block.entity;
 
+import juuxel.paintersblocks.item.SwatchItem;
 import juuxel.paintersblocks.util.Colors;
 import juuxel.paintersblocks.util.NbtKeys;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
@@ -15,13 +16,14 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 
-public class PaintableBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
+public class PaintableBlockEntity extends BlockEntity implements BlockEntityClientSerializable, SwatchItem.DyeTarget {
     private int color = Colors.STONE_DEFAULT_COLOR;
 
     public PaintableBlockEntity(BlockPos pos, BlockState state) {
         super(PbBlockEntities.PAINTERS_BLOCK, pos, state);
     }
 
+    @Override
     public int getColor() {
         return color;
     }
@@ -29,6 +31,12 @@ public class PaintableBlockEntity extends BlockEntity implements BlockEntityClie
     public void setColor(int color) {
         this.color = color;
         markDirty();
+    }
+
+    @Override
+    public void setColorAndSync(int color) {
+        setColor(color);
+        sync();
     }
 
     @Override

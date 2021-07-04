@@ -1,0 +1,6 @@
+{
+  "parent": "painters_blocks:part/templates/paintable_slab_bottom",
+  "textures": {
+    "all": "painters_blocks:block/painters_stone"
+  }
+}
