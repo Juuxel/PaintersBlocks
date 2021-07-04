@@ -24,6 +24,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,7 +38,8 @@ public class PaintableSlabItem extends PartItem implements PbDyeableItem {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         BlockPos pos = context.getBlockPos();
-        double y = context.getHitPos().y - pos.getY();
+        Vec3d fractPos = context.getHitPos().subtract(pos.getX(), pos.getY(), pos.getZ());
+        double y = fractPos.y;
 
         if (MathHelper.approximatelyEquals(y, 0)) {
             y = 1;
@@ -50,9 +52,9 @@ public class PaintableSlabItem extends PartItem implements PbDyeableItem {
             default -> y >= 0.5f ? BlockHalf.TOP : BlockHalf.BOTTOM;
         };
 
-        double axis = context.getHitPos().getComponentAlongAxis(context.getSide().getAxis());
+        double axis = fractPos.getComponentAlongAxis(context.getSide().getAxis());
         boolean tryInSelf = !(MathHelper.approximatelyEquals(axis, 0) || MathHelper.approximatelyEquals(axis, 1));
-        BlockPos[] positions = tryInSelf ? new BlockPos[] { pos, pos.offset(context.getSide()) } : new BlockPos[] { pos };
+        BlockPos[] positions = tryInSelf ? new BlockPos[] { pos, pos.offset(context.getSide()) } : new BlockPos[] { pos.offset(context.getSide()) };
 
         MultipartContainer.@Nullable PartOffer offer = null;
 
