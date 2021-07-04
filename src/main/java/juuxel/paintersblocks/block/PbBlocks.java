@@ -20,6 +20,7 @@ import java.util.function.BiFunction;
 import static net.minecraft.block.AbstractBlock.Settings.copy;
 
 public final class PbBlocks {
+    public static final Block PAINTERS_STONE = register("painters_stone", new PaintableBlock(copy(Blocks.STONE)), PaintableItem::new);
     public static final Block PAINTERS_BRICKS = register("painters_bricks", new PaintableBlock(copy(Blocks.STONE_BRICKS)), PaintableItem::new);
     public static final Block PAINTERS_TILES = register("painters_tiles", new PaintableBlock(copy(PAINTERS_BRICKS)), PaintableItem::new);
     public static final Block POLISHED_PAINTERS_STONE = register("polished_painters_stone", new PaintableBlock(copy(PAINTERS_BRICKS)), PaintableItem::new);
@@ -30,6 +31,7 @@ public final class PbBlocks {
     public static final Block GLOWING_CHISELED_PAINTERS_STONE = register("glowing_chiseled_painters_stone", new PaintableBlock(copy(GLOWING_PAINTERS_BRICKS)), PaintableItem::new);
 
     public static final List<Block> ALL_BLOCKS = List.of(
+        PAINTERS_STONE,
         PAINTERS_BRICKS,
         PAINTERS_TILES,
         POLISHED_PAINTERS_STONE,
