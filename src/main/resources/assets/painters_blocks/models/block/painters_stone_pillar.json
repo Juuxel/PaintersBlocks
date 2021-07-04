@@ -1,0 +1,7 @@
+{
+  "parent": "painters_blocks:block/templates/painters_block_pillar",
+  "textures": {
+    "side": "painters_blocks:block/painters_stone_pillar_side",
+    "end": "painters_blocks:block/painters_stone_pillar_end"
+  }
+}

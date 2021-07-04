@@ -40,6 +40,7 @@ public class PaintableBlock extends BlockWithEntity {
         () -> ImmutableMap.<Block, Block>builder()
             .put(PbBlocks.CHISELED_PAINTERS_STONE, PbBlocks.GLOWING_CHISELED_PAINTERS_STONE)
             .put(PbBlocks.PAINTERS_BRICKS, PbBlocks.GLOWING_PAINTERS_BRICKS)
+            .put(PbBlocks.PAINTERS_STONE_PILLAR, PbBlocks.GLOWING_PAINTERS_STONE_PILLAR)
             .put(PbBlocks.PAINTERS_TILES, PbBlocks.GLOWING_PAINTERS_TILES)
             .build()
     );

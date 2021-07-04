@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=x": { "model": "painters_blocks:block/glowing_painters_stone_pillar", "x": 90, "y": 90 },
+    "axis=y": { "model": "painters_blocks:block/glowing_painters_stone_pillar" },
+    "axis=z": { "model": "painters_blocks:block/glowing_painters_stone_pillar", "x": 90 }
+  }
+}

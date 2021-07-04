@@ -35,10 +35,12 @@ public final class PbBlocks {
     public static final Block PAINTERS_TILES = register("painters_tiles", new PaintableBlock(copy(PAINTERS_BRICKS)), PaintableItem::new);
     public static final Block POLISHED_PAINTERS_STONE = register("polished_painters_stone", new PaintableBlock(copy(PAINTERS_BRICKS)), PaintableItem::new);
     public static final Block CHISELED_PAINTERS_STONE = register("chiseled_painters_stone", new PaintableBlock(copy(PAINTERS_BRICKS)), PaintableItem::new);
+    public static final Block PAINTERS_STONE_PILLAR = register("painters_stone_pillar", new PaintablePillarBlock(copy(PAINTERS_BRICKS)), PaintableItem::new);
 
     public static final Block GLOWING_PAINTERS_BRICKS = register("glowing_painters_bricks", new PaintableBlock(copy(PAINTERS_BRICKS).nonOpaque().luminance(state -> 10)), PaintableItem::new);
     public static final Block GLOWING_PAINTERS_TILES = register("glowing_painters_tiles", new PaintableBlock(copy(GLOWING_PAINTERS_BRICKS)), PaintableItem::new);
     public static final Block GLOWING_CHISELED_PAINTERS_STONE = register("glowing_chiseled_painters_stone", new PaintableBlock(copy(GLOWING_PAINTERS_BRICKS)), PaintableItem::new);
+    public static final Block GLOWING_PAINTERS_STONE_PILLAR = register("glowing_painters_stone_pillar", new PaintablePillarBlock(copy(GLOWING_PAINTERS_BRICKS)), PaintableItem::new);
 
     public static final List<Block> ALL_BLOCKS = List.of(
         PAINTERS_STONE,
@@ -46,9 +48,11 @@ public final class PbBlocks {
         PAINTERS_TILES,
         POLISHED_PAINTERS_STONE,
         CHISELED_PAINTERS_STONE,
+        PAINTERS_STONE_PILLAR,
         GLOWING_PAINTERS_BRICKS,
         GLOWING_PAINTERS_TILES,
-        GLOWING_CHISELED_PAINTERS_STONE
+        GLOWING_CHISELED_PAINTERS_STONE,
+        GLOWING_PAINTERS_STONE_PILLAR
     );
 
     private static Block register(String id, Block block, BiFunction<Block, Item.Settings, Item> item) {

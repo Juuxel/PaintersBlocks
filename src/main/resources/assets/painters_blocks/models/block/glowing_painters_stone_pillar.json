@@ -1,0 +1,15 @@
+{
+  "parent": "painters_blocks:block/templates/glowing_painters_block_pillar",
+  "textures": {
+    "side": "painters_blocks:block/painters_stone_pillar_side",
+    "end": "painters_blocks:block/painters_stone_pillar_end"
+  },
+  "jmx": {
+    "textures": {
+      "jmx_side0": "painters_blocks:block/painters_stone_pillar_side",
+      "jmx_side1": "painters_blocks:block/painters_stone_pillar_side_glow",
+      "jmx_end0": "painters_blocks:block/painters_stone_pillar_end",
+      "jmx_end1": "painters_blocks:block/painters_stone_pillar_end_glow"
+    }
+  }
+}

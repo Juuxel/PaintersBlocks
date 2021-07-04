@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "#side"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "down": { "texture": "#end", "cullface": "down", "tintindex": 0, "jmx_material": "#jmx_glow","layered_textures": [ { "jmx_tex": "#jmx_end" }, { "jmx_tex": "#jmx_end" } ] },
+        "up": { "texture": "#end", "cullface": "up", "tintindex": 0, "jmx_material": "#jmx_glow","layered_textures": [ { "jmx_tex": "#jmx_end" }, { "jmx_tex": "#jmx_end" } ] },
+        "north": { "texture": "#side", "cullface": "north", "tintindex": 0, "jmx_material": "#jmx_glow","layered_textures": [ { "jmx_tex": "#jmx_side" }, { "jmx_tex": "#jmx_side" } ] },
+        "south": { "texture": "#side", "cullface": "south", "tintindex": 0, "jmx_material": "#jmx_glow","layered_textures": [ { "jmx_tex": "#jmx_side" }, { "jmx_tex": "#jmx_side" } ] },
+        "west": { "texture": "#side", "cullface": "west", "tintindex": 0, "jmx_material": "#jmx_glow","layered_textures": [ { "jmx_tex": "#jmx_side" }, { "jmx_tex": "#jmx_side" } ] },
+        "east": { "texture": "#side", "cullface": "east", "tintindex": 0, "jmx_material": "#jmx_glow","layered_textures": [ { "jmx_tex": "#jmx_side" }, { "jmx_tex": "#jmx_side" } ] }
+      }
+    }
+  ],
+  "jmx": {
+    "materials": {
+      "jmx_glow": {
+        "layers": [
+          { "layer": "solid" },
+          { "layer": "cutout", "emissive": true, "ambient_occlusion": false, "diffuse": false, "colorIndex": false }
+        ]
+      }
+    }
+  }
+}
