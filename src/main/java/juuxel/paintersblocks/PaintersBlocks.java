@@ -10,6 +10,7 @@ import juuxel.paintersblocks.block.PbBlocks;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
 import juuxel.paintersblocks.item.PbItemTags;
 import juuxel.paintersblocks.item.PbItems;
+import juuxel.paintersblocks.loot.PbLoot;
 import juuxel.paintersblocks.part.PbParts;
 import juuxel.paintersblocks.recipe.PbRecipes;
 import net.fabricmc.api.ModInitializer;
@@ -30,5 +31,6 @@ public final class PaintersBlocks implements ModInitializer {
         PbItemTags.init();
         PbBlockEntities.init();
         PbRecipes.init();
+        PbLoot.init();
     }
 }

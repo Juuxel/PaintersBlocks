@@ -28,10 +28,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.shape.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -46,6 +49,8 @@ public class PaintableSlabPart extends AbstractPart implements SwatchItem.DyeTar
     private final VoxelShape shape;
     private int color;
     private PaintableSlabModelKey modelKey;
+    @Nullable
+    private Identifier lootTableId = null;
 
     public PaintableSlabPart(PartDefinition definition, MultipartHolder holder, BlockHalf half, @Nullable Integer color) {
         super(definition, holder);
@@ -125,11 +130,35 @@ public class PaintableSlabPart extends AbstractPart implements SwatchItem.DyeTar
 
     @Override
     public ItemStack getPickStack() {
-        // TODO: Make drops data-driven (https://github.com/AlexIIL/LibMultiPart/issues/31)
         Item item = PbItems.PART_ITEMS_BY_DEFINITION.get(definition);
         ItemStack stack = new ItemStack(item);
         ((DyeableItem) item).setColor(stack, color);
         return stack;
+    }
+
+    private Identifier getLootTableId() {
+        if (lootTableId == null) {
+            lootTableId = new Identifier(definition.identifier.getNamespace(), "parts/" + definition.identifier.getPath());
+        }
+
+        return lootTableId;
+    }
+
+    @Override
+    public void addDrops(ItemDropTarget target, LootContext context) {
+        boolean canHarvest;
+
+        // TODO: Don't rely on the block's mineable tags, requires part tags
+        if (context.get(LootContextParameters.THIS_ENTITY) instanceof PlayerEntity player) {
+            canHarvest = player.canHarvest(getClosestBlockState());
+        } else {
+            // noinspection ConstantConditions: context.get cannot be null for a required parameter
+            canHarvest = context.get(LootContextParameters.TOOL).isSuitableFor(getClosestBlockState());
+        }
+
+        if (canHarvest) {
+            target.dropAll(context.getWorld().getServer().getLootManager().getTable(getLootTableId()).generateLoot(context));
+        }
     }
 
     @Override
