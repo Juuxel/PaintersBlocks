@@ -18,6 +18,9 @@
                   "op": "replace"
                 }
               ]
+            },
+            {
+              "function": "painters_blocks:remove_default_color"
             }
           ]
         }
