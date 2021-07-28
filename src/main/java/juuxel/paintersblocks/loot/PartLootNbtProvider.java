@@ -26,7 +26,7 @@ public class PartLootNbtProvider implements LootNbtProvider {
 
     @Nullable
     @Override
-    public NbtElement getNbtTag(LootContext context) {
+    public NbtElement getNbt(LootContext context) {
         PartLootParams.@Nullable BrokenPart part = context.get(PartLootParams.BROKEN_PART);
 
         if (part != null) {

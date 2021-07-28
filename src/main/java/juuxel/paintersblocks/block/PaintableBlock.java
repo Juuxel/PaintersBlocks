@@ -98,7 +98,7 @@ public class PaintableBlock extends BlockWithEntity {
     }
 
     @Override
-    public void addStacksForDisplay(ItemGroup group, DefaultedList<ItemStack> stacks) {
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
         PbDyeableItem.appendStacks(this, stacks);
     }
 }
