@@ -9,6 +9,7 @@ package juuxel.paintersblocks.item;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import juuxel.paintersblocks.block.entity.PaintableBlockEntity;
+import juuxel.paintersblocks.mixin.BlockItemAccessor;
 import juuxel.paintersblocks.util.Colors;
 import juuxel.paintersblocks.util.NbtKeys;
 import net.minecraft.block.Block;
@@ -51,7 +52,7 @@ public class PaintableItem extends BlockItem implements PbDyeableItem {
 
     @Override
     public String getColorParentNbtKey() {
-        return BLOCK_ENTITY_TAG_KEY;
+        return BlockItemAccessor.getBlockEntityTagKey();
     }
 
     @Override

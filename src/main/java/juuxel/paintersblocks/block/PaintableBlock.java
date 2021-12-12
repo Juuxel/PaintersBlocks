@@ -21,7 +21,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
@@ -67,7 +66,7 @@ public class PaintableBlock extends BlockWithEntity {
 
                     if (oldBe != null) {
                         @Nullable BlockEntity newBe = world.getBlockEntity(pos);
-                        if (newBe != null) newBe.readNbt(oldBe.writeNbt(new NbtCompound()));
+                        if (newBe != null) newBe.readNbt(oldBe.createNbt());
                     }
 
                     return ActionResult.CONSUME;

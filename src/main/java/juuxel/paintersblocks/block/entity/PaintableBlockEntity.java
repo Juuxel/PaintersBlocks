@@ -9,14 +9,17 @@ package juuxel.paintersblocks.block.entity;
 import juuxel.paintersblocks.item.SwatchItem;
 import juuxel.paintersblocks.util.Colors;
 import juuxel.paintersblocks.util.NbtKeys;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
 
-public class PaintableBlockEntity extends BlockEntity implements BlockEntityClientSerializable, SwatchItem.DyeTarget {
+public class PaintableBlockEntity extends BlockEntity implements SwatchItem.DyeTarget {
     private int color = Colors.STONE_DEFAULT_COLOR;
 
     public PaintableBlockEntity(BlockPos pos, BlockState state) {
@@ -36,34 +39,35 @@ public class PaintableBlockEntity extends BlockEntity implements BlockEntityClie
     @Override
     public void setColorAndSync(int color) {
         setColor(color);
-        sync();
+        PbBlockEntities.sync(this);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         color = nbt.getInt(NbtKeys.COLOR);
+
+        if (world != null && world.isClient) {
+            // rerender
+            // TODO: this is concern, can I remove it?
+            world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
+        }
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound nbt) {
+    public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         nbt.putInt(NbtKeys.COLOR, color);
-        return nbt;
     }
 
     @Override
-    public void fromClientTag(NbtCompound nbt) {
-        color = nbt.getInt(NbtKeys.COLOR);
-
-        // rerender
-        // TODO: this is concern, can I remove it?
-        world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 
+    @Nullable
     @Override
-    public NbtCompound toClientTag(NbtCompound nbt) {
-        nbt.putInt(NbtKeys.COLOR, color);
-        return nbt;
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
     }
 }
