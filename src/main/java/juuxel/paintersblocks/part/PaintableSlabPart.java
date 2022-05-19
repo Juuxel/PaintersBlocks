@@ -129,7 +129,7 @@ public class PaintableSlabPart extends AbstractPart implements SwatchItem.DyeTar
     }
 
     @Override
-    public ItemStack getPickStack() {
+    public ItemStack getPickStack(@Nullable BlockHitResult hitResult) {
         Item item = PbItems.PART_ITEMS_BY_DEFINITION.get(definition);
         ItemStack stack = new ItemStack(item);
         ((DyeableItem) item).setColor(stack, color);

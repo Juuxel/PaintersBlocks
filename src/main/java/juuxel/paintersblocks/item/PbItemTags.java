@@ -7,15 +7,15 @@
 package juuxel.paintersblocks.item;
 
 import juuxel.paintersblocks.PaintersBlocks;
-import net.fabricmc.fabric.api.tag.TagRegistry;
 import net.minecraft.item.Item;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
+import net.minecraft.util.registry.Registry;
 
 public final class PbItemTags {
-    public static final Tag<Item> GLOW_INGREDIENTS = register("glow_ingredients");
+    public static final TagKey<Item> GLOW_INGREDIENTS = register("glow_ingredients");
 
-    private static Tag<Item> register(String id) {
-        return TagRegistry.item(PaintersBlocks.id(id));
+    private static TagKey<Item> register(String id) {
+        return TagKey.of(Registry.ITEM_KEY, PaintersBlocks.id(id));
     }
 
     public static void init() {
