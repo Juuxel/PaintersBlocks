@@ -12,6 +12,7 @@ import juuxel.paintersblocks.PaintersBlocks;
 import juuxel.paintersblocks.block.PbBlocks;
 import juuxel.paintersblocks.block.entity.PaintableBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
+import juuxel.paintersblocks.client.model.GlowingBlockModels;
 import juuxel.paintersblocks.item.PbItems;
 import juuxel.paintersblocks.item.SwatchItem;
 import juuxel.paintersblocks.part.PaintableSlabModelKey;
@@ -65,5 +66,7 @@ public final class PaintersBlocksClient implements ClientModInitializer {
                 }
             }
         });
+
+        GlowingBlockModels.init();
     }
 }
