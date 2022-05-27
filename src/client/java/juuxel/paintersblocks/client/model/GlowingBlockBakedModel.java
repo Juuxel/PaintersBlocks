@@ -13,43 +13,30 @@ import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
-import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.ModelBakeSettings;
-import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockRenderView;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-import java.util.Random;
 import java.util.function.Supplier;
 
-public final class GlowingBlockBakedModel implements BakedModel, FabricBakedModel {
-    private static final Supplier<RenderMaterial> GLOWING_MATERIAL = Suppliers.memoize(() -> {
+public final class GlowingBlockBakedModel extends PbBakedModel {
+    static final Supplier<RenderMaterial> GLOWING_MATERIAL = Suppliers.memoize(() -> {
         Renderer renderer = RendererAccess.INSTANCE.getRenderer();
         return renderer.materialFinder()
             .blendMode(0, BlendMode.CUTOUT)
             .emissive(0, true)
             .find();
     });
-    private static final int WHITE = 0xFF_FFFFFF;
-    private final Mesh mesh;
+    static final int WHITE = 0xFF_FFFFFF;
     private final Sprite particle;
     private final ModelTransformation transformation;
 
     public GlowingBlockBakedModel(Sprite sideBaseTexture, Sprite sideGlowingTexture,
                                   Sprite endBaseTexture, Sprite endGlowingTexture, Sprite particle,
                                   ModelTransformation transformation, ModelBakeSettings bakeSettings) {
+        super(build(sideBaseTexture, sideGlowingTexture, endBaseTexture, endGlowingTexture, bakeSettings));
         this.transformation = transformation;
-        this.mesh = build(sideBaseTexture, sideGlowingTexture, endBaseTexture, endGlowingTexture, bakeSettings);
         this.particle = particle;
     }
 
@@ -98,46 +85,6 @@ public final class GlowingBlockBakedModel implements BakedModel, FabricBakedMode
     }
 
     @Override
-    public boolean isVanillaAdapter() {
-        return false;
-    }
-
-    @Override
-    public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<Random> randomSupplier, RenderContext context) {
-        context.meshConsumer().accept(mesh);
-    }
-
-    @Override
-    public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
-        context.meshConsumer().accept(mesh);
-    }
-
-    @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, Random random) {
-        return List.of();
-    }
-
-    @Override
-    public boolean useAmbientOcclusion() {
-        return true;
-    }
-
-    @Override
-    public boolean hasDepth() {
-        return false;
-    }
-
-    @Override
-    public boolean isSideLit() {
-        return true;
-    }
-
-    @Override
-    public boolean isBuiltin() {
-        return false;
-    }
-
-    @Override
     public Sprite getParticleSprite() {
         return particle;
     }
@@ -145,10 +92,5 @@ public final class GlowingBlockBakedModel implements BakedModel, FabricBakedMode
     @Override
     public ModelTransformation getTransformation() {
         return transformation;
-    }
-
-    @Override
-    public ModelOverrideList getOverrides() {
-        return ModelOverrideList.EMPTY;
     }
 }

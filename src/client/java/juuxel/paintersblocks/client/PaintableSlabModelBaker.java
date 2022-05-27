@@ -10,6 +10,7 @@ import alexiil.mc.lib.multipart.api.PartDefinition;
 import alexiil.mc.lib.multipart.api.render.PartModelBaker;
 import alexiil.mc.lib.multipart.api.render.PartRenderContext;
 import com.mojang.datafixers.util.Pair;
+import juuxel.paintersblocks.client.model.PbBakedModel;
 import juuxel.paintersblocks.part.PaintableSlabModelKey;
 import net.fabricmc.fabric.api.client.model.BakedModelManagerHelper;
 import net.minecraft.block.enums.BlockHalf;
@@ -38,11 +39,19 @@ public final class PaintableSlabModelBaker implements PartModelBaker<PaintableSl
         BakedModel model = BakedModelManagerHelper.getModel(MinecraftClient.getInstance().getBakedModelManager(), getModelId(key));
 
         ctx.pushTransform(quad -> {
-            int color = 0xFF_000000 | key.color;
-            quad.spriteColor(0, color, color, color, color);
+            if (quad.colorIndex() == 0) {
+                int color = 0xFF_000000 | key.color;
+                quad.spriteColor(0, color, color, color, color);
+            }
             return true;
         });
-        ctx.fallbackConsumer().accept(model);
+
+        if (model instanceof PbBakedModel pbm) {
+            ctx.meshConsumer().accept(pbm.mesh());
+        } else {
+            ctx.fallbackConsumer().accept(model);
+        }
+
         ctx.popTransform();
     }
 }

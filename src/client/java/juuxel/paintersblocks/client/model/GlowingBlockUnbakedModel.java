@@ -12,14 +12,11 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.ModelBakeSettings;
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.UnbakedModel;
-import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,10 +24,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-public final class GlowingBlockUnbakedModel implements UnbakedModel {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PaintersBlocks.ID);
-    private static final Identifier PARENT_MODEL_ID = new Identifier("minecraft", "block/block");
-
+public final class GlowingBlockUnbakedModel extends PbUnbakedModel {
     private final SpriteIdentifier sideBaseTexture;
     private final SpriteIdentifier sideGlowingTexture;
     private final SpriteIdentifier endBaseTexture;
@@ -52,26 +46,13 @@ public final class GlowingBlockUnbakedModel implements UnbakedModel {
     }
 
     @Override
-    public Collection<Identifier> getModelDependencies() {
-        return Set.of(PARENT_MODEL_ID);
-    }
-
-    @Override
     public Collection<SpriteIdentifier> getTextureDependencies(Function<Identifier, UnbakedModel> unbakedModelGetter, Set<Pair<String, String>> unresolvedTextureReferences) {
         return List.of(this.sideBaseTexture, this.sideGlowingTexture, this.endBaseTexture, this.endGlowingTexture, this.particle);
     }
 
     @Override
     public BakedModel bake(ModelLoader loader, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
-        var parent = loader.getOrLoadModel(PARENT_MODEL_ID);
-        ModelTransformation transformation;
-
-        if (parent instanceof JsonUnbakedModel jum) {
-            transformation = jum.getTransformations();
-        } else {
-            LOGGER.error("{} was not JsonUnbakedModel, found: {}", PARENT_MODEL_ID, parent);
-            transformation = ModelTransformation.NONE;
-        }
+        ModelTransformation transformation = getParentTransformation(loader);
 
         return new GlowingBlockBakedModel(
             textureGetter.apply(sideBaseTexture),
