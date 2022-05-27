@@ -74,7 +74,6 @@ public final class GlowingBlockUnbakedModel implements UnbakedModel {
         }
 
         return new GlowingBlockBakedModel(
-            modelId,
             textureGetter.apply(sideBaseTexture),
             textureGetter.apply(sideGlowingTexture),
             textureGetter.apply(endBaseTexture),
