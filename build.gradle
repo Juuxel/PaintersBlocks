@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.12-SNAPSHOT'
+    id 'fabric-loom' version '0.11-SNAPSHOT'
     id 'io.github.juuxel.loom-quiltflower' version '1.7.2'
     id 'org.cadixdev.licenser' version '0.6.1'
     id 'maven-publish'
@@ -24,17 +24,6 @@ repositories {
 
         content {
             includeGroup "alexiil.mc.lib"
-        }
-    }
-}
-
-loom {
-    splitEnvironmentSourceSets()
-
-    mods {
-        painters_blocks {
-            sourceSet sourceSets.main
-            sourceSet sourceSets.client
         }
     }
 }
