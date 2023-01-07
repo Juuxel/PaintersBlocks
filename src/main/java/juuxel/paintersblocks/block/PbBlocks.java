@@ -8,15 +8,11 @@ package juuxel.paintersblocks.block;
 
 import juuxel.paintersblocks.PaintersBlocks;
 import juuxel.paintersblocks.item.PaintableItem;
-import juuxel.paintersblocks.item.PbDyeableItem;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DyeColor;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -24,12 +20,6 @@ import java.util.function.BiFunction;
 import static net.minecraft.block.AbstractBlock.Settings.copy;
 
 public final class PbBlocks {
-    public static final ItemGroup ITEM_GROUP = FabricItemGroupBuilder.build(PaintersBlocks.id("group"), () -> {
-        ItemStack stack = new ItemStack(PbBlocks.PAINTERS_BRICKS);
-        PbDyeableItem.setColor(stack, DyeColor.LIME);
-        return stack;
-    });
-
     public static final Block PAINTERS_STONE = register("painters_stone", new PaintableBlock(copy(Blocks.STONE)), PaintableItem::new);
     public static final Block PAINTERS_BRICKS = register("painters_bricks", new PaintableBlock(copy(Blocks.STONE_BRICKS)), PaintableItem::new);
     public static final Block PAINTERS_TILES = register("painters_tiles", new PaintableBlock(copy(PAINTERS_BRICKS)), PaintableItem::new);
@@ -56,8 +46,8 @@ public final class PbBlocks {
     );
 
     private static Block register(String id, Block block, BiFunction<Block, Item.Settings, Item> item) {
-        Registry.register(Registry.BLOCK, PaintersBlocks.id(id), block);
-        Registry.register(Registry.ITEM, PaintersBlocks.id(id), item.apply(block, new Item.Settings().group(ITEM_GROUP)));
+        Registry.register(Registries.BLOCK, PaintersBlocks.id(id), block);
+        Registry.register(Registries.ITEM, PaintersBlocks.id(id), item.apply(block, new Item.Settings()));
         return block;
     }
 

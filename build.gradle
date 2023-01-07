@@ -12,7 +12,7 @@ archivesBaseName = project.archives_base_name
 version = "$project.mod_version+$project.minecraft_version"
 group = project.maven_group
 
-final def LIBMULTIPART_ENABLED = true
+final def LIBMULTIPART_ENABLED = false
 
 sourceSets {
     if (LIBMULTIPART_ENABLED) {

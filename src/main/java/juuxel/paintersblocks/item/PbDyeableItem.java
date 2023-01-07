@@ -17,10 +17,10 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.collection.DefaultedList;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public interface PbDyeableItem extends DyeableItem {
     default int getDefaultColor() {
@@ -93,13 +93,13 @@ public interface PbDyeableItem extends DyeableItem {
         ((DyeableItem) to.getItem()).setColor(to, ((DyeableItem) from.getItem()).getColor(from));
     }
 
-    static void appendStacks(ItemConvertible item, DefaultedList<ItemStack> stacks) {
-        stacks.add(new ItemStack(item));
+    static void appendStacks(ItemConvertible item, Consumer<ItemStack> stacks) {
+        stacks.accept(new ItemStack(item));
 
         for (DyeColor color : DyeColor.values()) {
             ItemStack stack = new ItemStack(item);
             setColor(stack, color);
-            stacks.add(stack);
+            stacks.accept(stack);
         }
     }
 }

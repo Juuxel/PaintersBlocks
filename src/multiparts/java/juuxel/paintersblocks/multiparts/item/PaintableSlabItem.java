@@ -15,14 +15,12 @@ import juuxel.paintersblocks.multiparts.part.PbmParts;
 import juuxel.paintersblocks.util.Colors;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -92,12 +90,5 @@ public class PaintableSlabItem extends PartItem implements PbDyeableItem {
     @Override
     public int getDefaultColor() {
         return Colors.STONE_DEFAULT_COLOR;
-    }
-
-    @Override
-    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        if (isIn(group)) {
-            PbDyeableItem.appendStacks(this, stacks);
-        }
     }
 }

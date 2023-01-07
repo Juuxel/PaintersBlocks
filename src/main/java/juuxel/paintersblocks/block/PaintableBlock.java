@@ -10,7 +10,6 @@ import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMap;
 import juuxel.paintersblocks.block.entity.PaintableBlockEntity;
 import juuxel.paintersblocks.block.entity.PbBlockEntities;
-import juuxel.paintersblocks.item.PbDyeableItem;
 import juuxel.paintersblocks.item.PbItemTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -19,11 +18,9 @@ import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
@@ -94,10 +91,5 @@ public class PaintableBlock extends BlockWithEntity {
         world.getBlockEntity(pos, PbBlockEntities.PAINTERS_BLOCK)
             .ifPresent(entity -> ((DyeableItem) stack.getItem()).setColor(stack, entity.getColor()));
         return stack;
-    }
-
-    @Override
-    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        PbDyeableItem.appendStacks(this, stacks);
     }
 }

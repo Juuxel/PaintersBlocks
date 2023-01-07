@@ -8,14 +8,14 @@ package juuxel.paintersblocks.item;
 
 import juuxel.paintersblocks.PaintersBlocks;
 import net.minecraft.item.Item;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 
 public final class PbItemTags {
     public static final TagKey<Item> GLOW_INGREDIENTS = register("glow_ingredients");
 
     private static TagKey<Item> register(String id) {
-        return TagKey.of(Registry.ITEM_KEY, PaintersBlocks.id(id));
+        return TagKey.of(RegistryKeys.ITEM, PaintersBlocks.id(id));
     }
 
     public static void init() {

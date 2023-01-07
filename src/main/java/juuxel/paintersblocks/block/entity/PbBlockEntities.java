@@ -11,15 +11,16 @@ import juuxel.paintersblocks.block.PbBlocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public final class PbBlockEntities {
     public static final BlockEntityType<PaintableBlockEntity> PAINTERS_BLOCK = register("painters_block", FabricBlockEntityTypeBuilder.create(PaintableBlockEntity::new, PbBlocks.all()).build());
 
     private static <T extends BlockEntityType<?>> T register(String id, T type) {
-        return Registry.register(Registry.BLOCK_ENTITY_TYPE, PaintersBlocks.id(id), type);
+        return Registry.register(Registries.BLOCK_ENTITY_TYPE, PaintersBlocks.id(id), type);
     }
 
     public static void init() {

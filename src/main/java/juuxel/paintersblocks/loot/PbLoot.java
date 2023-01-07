@@ -8,13 +8,14 @@ package juuxel.paintersblocks.loot;
 
 import juuxel.paintersblocks.PaintersBlocks;
 import net.minecraft.loot.function.LootFunctionType;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 public final class PbLoot {
     public static final LootFunctionType REMOVE_DEFAULT_COLOR = register("remove_default_color", new LootFunctionType(new RemoveDefaultColorLootFunction.Serializer()));
 
     private static LootFunctionType register(String id, LootFunctionType type) {
-        return Registry.register(Registry.LOOT_FUNCTION_TYPE, PaintersBlocks.id(id), type);
+        return Registry.register(Registries.LOOT_FUNCTION_TYPE, PaintersBlocks.id(id), type);
     }
 
     public static void init() {

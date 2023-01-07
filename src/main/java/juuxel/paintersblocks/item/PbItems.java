@@ -9,23 +9,21 @@ package juuxel.paintersblocks.item;
 import com.google.common.collect.ImmutableList;
 import juuxel.paintersblocks.PaintersBlocks;
 import juuxel.paintersblocks.block.PbBlocks;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.Util;
-import net.minecraft.util.registry.Registry;
 
 import java.util.List;
 
 public final class PbItems {
-    public static final ItemGroup GROUP = PbBlocks.ITEM_GROUP;
-
-    public static Item.Settings settings() {
-        return new Item.Settings().group(GROUP);
-    }
-
-    public static final Item SWATCH = register("swatch", new SwatchItem(settings()));
+    public static final Item SWATCH = register("swatch", new SwatchItem(new Item.Settings()));
 
     public static final List<Item> ALL_DYEABLE_ITEMS = Util.make(ImmutableList.<Item>builder(), builder -> {
         for (ItemConvertible item : PbBlocks.ALL_BLOCKS) {
@@ -35,8 +33,21 @@ public final class PbItems {
         builder.add(SWATCH);
     }).build();
 
+    public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(PaintersBlocks.id("group"))
+        .entries((enabledFeatures, entries, operatorEnabled) -> {
+            for (Item item : ALL_DYEABLE_ITEMS) {
+                PbDyeableItem.appendStacks(item, entries::add);
+            }
+        })
+        .icon(() -> {
+            ItemStack stack = new ItemStack(PbBlocks.PAINTERS_BRICKS);
+            PbDyeableItem.setColor(stack, DyeColor.LIME);
+            return stack;
+        })
+        .build();
+
     public static <I extends Item> I register(String id, I item) {
-        return Registry.register(Registry.ITEM, PaintersBlocks.id(id), item);
+        return Registry.register(Registries.ITEM, PaintersBlocks.id(id), item);
     }
 
     public static void init() {
