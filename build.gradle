@@ -104,6 +104,7 @@ jar {
 
 remapJar {
     archiveClassifier = 'core'
+    addNestedDependencies = false
 }
 
 def wrapperModJsonTemplate = file('src/wrapper/fabric.mod.json')
