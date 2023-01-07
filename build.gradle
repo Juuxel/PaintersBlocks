@@ -12,6 +12,29 @@ archivesBaseName = project.archives_base_name
 version = "$project.mod_version+$project.minecraft_version"
 group = project.maven_group
 
+final def LIBMULTIPART_ENABLED = true
+
+sourceSets {
+    multiparts {
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+    }
+
+    create 'wrapper'
+}
+
+loom {
+    runs {
+        lmpClient {
+            inherit client
+            configName = "Minecraft Client with LMP"
+            source sourceSets.multiparts
+        }
+    }
+
+    createRemapConfigurations sourceSets.multiparts
+}
+
 repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
@@ -39,14 +62,21 @@ dependencies {
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
-    modImplementation include("alexiil.mc.lib:libmultipart-all:$project.libmultipart_version")
+    multipartsImplementation sourceSets.main.output
+    modMultipartsImplementation "alexiil.mc.lib:libmultipart-all:$project.libmultipart_version"
+
+    if (LIBMULTIPART_ENABLED) {
+        include "alexiil.mc.lib:libmultipart-all:$project.libmultipart_version"
+    }
 }
 
-processResources {
-    inputs.property "version", project.version
+for (def sourceSet : [sourceSets.main, sourceSets.multiparts]) {
+    tasks.named(sourceSet.getTaskName('process', 'Resources'), ProcessResources) {
+        inputs.property "version", project.version
 
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        filesMatching("fabric.mod.json") {
+            expand "version": project.version
+        }
     }
 }
 
@@ -70,6 +100,69 @@ jar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}" }
     }
+}
+
+remapJar {
+    archiveClassifier = 'core'
+}
+
+def wrapperModJsonTemplate = file('src/wrapper/fabric.mod.json')
+def wrapperModJsonFile = file('build/wrapper/fabric.mod.json')
+
+task writeWrapperModJson {
+    inputs.file wrapperModJsonTemplate
+    inputs.property 'version', project.version
+    inputs.property 'libmultipartEnabled', LIBMULTIPART_ENABLED
+    outputs.file wrapperModJsonFile
+
+    doLast {
+        def content = new groovy.json.JsonSlurper().parse(wrapperModJsonTemplate)
+        content.version = project.version
+        content.depends = [
+            'painters_blocks': "=$project.version"
+        ]
+        if (LIBMULTIPART_ENABLED) {
+            content.depends.painters_blocks_multipart = "=$project.version"
+        }
+        def json = groovy.json.JsonOutput.toJson content
+        wrapperModJsonFile.parentFile.mkdirs()
+        wrapperModJsonFile.text = json
+    }
+}
+
+task multipartsJar(type: Jar) {
+    archiveClassifier = 'dev-multiparts'
+    destinationDirectory = jar.destinationDirectory
+    from sourceSets.multiparts.output
+}
+
+task remapMultipartsJar(type: net.fabricmc.loom.task.RemapJarTask) {
+    archiveClassifier = 'multiparts'
+    dependsOn multipartsJar
+    inputFile = multipartsJar.archiveFile
+}
+
+task wrapperJar(type: Jar) {
+    archiveClassifier = 'dev-wrapper'
+    destinationDirectory = jar.destinationDirectory
+    dependsOn writeWrapperModJson
+    from sourceSets.wrapper.output
+    from wrapperModJsonFile
+}
+
+task remapWrapperJar(type: net.fabricmc.loom.task.RemapJarTask) {
+    dependsOn wrapperJar
+    inputFile = wrapperJar.archiveFile
+
+    addNestedDependencies = true
+    nestedJars.from remapJar
+    if (LIBMULTIPART_ENABLED) {
+        nestedJars.from remapMultipartsJar
+    }
+}
+
+assemble {
+    dependsOn remapWrapperJar
 }
 
 license {

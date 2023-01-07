@@ -4,13 +4,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package juuxel.paintersblocks.item;
+package juuxel.paintersblocks.multiparts.item;
 
 import alexiil.mc.lib.multipart.api.MultipartContainer;
 import alexiil.mc.lib.multipart.api.MultipartUtil;
 import alexiil.mc.lib.multipart.api.PartDefinition;
-import juuxel.paintersblocks.part.PaintableSlabPart;
-import juuxel.paintersblocks.part.PbParts;
+import juuxel.paintersblocks.item.PbDyeableItem;
+import juuxel.paintersblocks.multiparts.part.PaintableSlabPart;
+import juuxel.paintersblocks.multiparts.part.PbmParts;
 import juuxel.paintersblocks.util.Colors;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.client.item.TooltipContext;
@@ -68,7 +69,7 @@ public class PaintableSlabItem extends PartItem implements PbDyeableItem {
         }
 
         if (offer != null) {
-            BlockSoundGroup soundGroup = PbParts.PARTS_TO_BLOCKS.get().get(definition).getDefaultState().getSoundGroup();
+            BlockSoundGroup soundGroup = PbmParts.PARTS_TO_BLOCKS.get().get(definition).getDefaultState().getSoundGroup();
             context.getWorld().playSound(context.getPlayer(), pos, soundGroup.getPlaceSound(), SoundCategory.BLOCKS, (soundGroup.getVolume() + 1f) / 2f, soundGroup.getPitch() * 0.8f);
 
             if (!context.getWorld().isClient()) {

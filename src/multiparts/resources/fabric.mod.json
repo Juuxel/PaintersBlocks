@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "painters_blocks_multiparts",
+  "version": "$version",
+
+  "name": "Painter's Blocks: Multiparts",
+  "description": "Adds paintable multiparts.",
+  "authors": [
+    "Juuz"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Juuxel/PaintersBlocks",
+    "sources": "https://github.com/Juuxel/PaintersBlocks",
+    "issues": "https://github.com/Juuxel/PaintersBlocks/issues"
+  },
+
+  "license": "MPL-2.0",
+  "icon": "assets/painters_blocks_multiparts/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": ["juuxel.paintersblocks.multiparts.PaintersBlocksMultiparts"],
+    "client": ["juuxel.paintersblocks.multiparts.client.PaintersBlocksMultipartsClient"]
+  },
+
+  "depends": {
+    "painters_blocks": "=$version",
+    "libmultipart": ">=0.7.2"
+  },
+
+  "custom": {
+    "modmenu": {
+      "parent": "painters_blocks"
+    }
+  }
+}

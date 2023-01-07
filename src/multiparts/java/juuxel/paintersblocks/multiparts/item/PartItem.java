@@ -4,7 +4,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package juuxel.paintersblocks.item;
+package juuxel.paintersblocks.multiparts.item;
 
 import alexiil.mc.lib.multipart.api.PartDefinition;
 import net.minecraft.item.Item;

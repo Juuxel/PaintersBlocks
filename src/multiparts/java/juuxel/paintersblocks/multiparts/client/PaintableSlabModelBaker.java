@@ -4,13 +4,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package juuxel.paintersblocks.client;
+package juuxel.paintersblocks.multiparts.client;
 
 import alexiil.mc.lib.multipart.api.PartDefinition;
 import alexiil.mc.lib.multipart.api.render.PartModelBaker;
 import alexiil.mc.lib.multipart.api.render.PartRenderContext;
 import com.mojang.datafixers.util.Pair;
-import juuxel.paintersblocks.part.PaintableSlabModelKey;
+import juuxel.paintersblocks.multiparts.part.PaintableSlabModelKey;
 import net.fabricmc.fabric.api.client.model.BakedModelManagerHelper;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.client.MinecraftClient;

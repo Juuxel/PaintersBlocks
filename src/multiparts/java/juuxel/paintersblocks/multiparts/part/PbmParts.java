@@ -4,7 +4,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package juuxel.paintersblocks.part;
+package juuxel.paintersblocks.multiparts.part;
 
 import alexiil.mc.lib.multipart.api.PartDefinition;
 import com.google.common.base.Suppliers;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public final class PbParts {
+public final class PbmParts {
     public static final PartDefinition PAINTERS_STONE_SLAB = register("painters_stone_slab", PaintableSlabPart::new, PaintableSlabPart::new);
     public static final PartDefinition PAINTERS_BRICK_SLAB = register("painters_brick_slab", PaintableSlabPart::new, PaintableSlabPart::new);
     public static final PartDefinition PAINTERS_TILE_SLAB = register("painters_tile_slab", PaintableSlabPart::new, PaintableSlabPart::new);

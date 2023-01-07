@@ -4,7 +4,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package juuxel.paintersblocks.loot;
+package juuxel.paintersblocks.multiparts.loot;
 
 import alexiil.mc.lib.multipart.api.PartLootParams;
 import com.google.common.collect.ImmutableSet;
@@ -43,7 +43,7 @@ public class PartLootNbtProvider implements LootNbtProvider {
 
     @Override
     public LootNbtProviderType getType() {
-        return PbLoot.PART;
+        return PbmLoot.PART;
     }
 
     static final class Serializer implements JsonSerializer<LootNbtProvider> {

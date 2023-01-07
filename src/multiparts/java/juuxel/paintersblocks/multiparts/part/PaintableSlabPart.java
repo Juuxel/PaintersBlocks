@@ -4,7 +4,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-package juuxel.paintersblocks.part;
+package juuxel.paintersblocks.multiparts.part;
 
 import alexiil.mc.lib.multipart.api.AbstractPart;
 import alexiil.mc.lib.multipart.api.MultipartEventBus;
@@ -19,6 +19,7 @@ import alexiil.mc.lib.net.InvalidInputDataException;
 import alexiil.mc.lib.net.NetByteBuf;
 import juuxel.paintersblocks.item.PbItems;
 import juuxel.paintersblocks.item.SwatchItem;
+import juuxel.paintersblocks.multiparts.item.PbmItems;
 import juuxel.paintersblocks.util.Colors;
 import juuxel.paintersblocks.util.NbtKeys;
 import net.minecraft.block.Block;
@@ -125,12 +126,12 @@ public class PaintableSlabPart extends AbstractPart implements SwatchItem.DyeTar
 
     @Override
     protected BlockState getClosestBlockState() {
-        return PbParts.PARTS_TO_BLOCKS.get().get(definition).getDefaultState();
+        return PbmParts.PARTS_TO_BLOCKS.get().get(definition).getDefaultState();
     }
 
     @Override
     public ItemStack getPickStack(@Nullable BlockHitResult hitResult) {
-        Item item = PbItems.PART_ITEMS_BY_DEFINITION.get(definition);
+        Item item = PbmItems.PART_ITEMS_BY_DEFINITION.get(definition);
         ItemStack stack = new ItemStack(item);
         ((DyeableItem) item).setColor(stack, color);
         return stack;
