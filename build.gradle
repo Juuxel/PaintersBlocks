@@ -103,12 +103,6 @@ java {
     withSourcesJar()
 }
 
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
-}
-
 remapJar {
     archiveClassifier = 'core'
     addNestedDependencies = false
@@ -158,6 +152,10 @@ task wrapperJar(type: Jar) {
     dependsOn writeWrapperModJson
     from sourceSets.wrapper.output
     from wrapperModJsonFile
+
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
+    }
 }
 
 task remapWrapperJar(type: net.fabricmc.loom.task.RemapJarTask) {
