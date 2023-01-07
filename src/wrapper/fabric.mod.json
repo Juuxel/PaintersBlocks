@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "painters_blocks_wrapper",
 
-  "name": "Painter's Blocks: Wrapper",
-  "description": "Container for Painter's Blocks modules.",
+  "name": "Painter's Blocks",
+  "description": "Dye to your heart's content! Adds a bunch of dyeable building blocks. Contains all Painter's Blocks modules.",
   "authors": [
     "Juuz"
   ],
