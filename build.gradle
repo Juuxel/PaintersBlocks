@@ -124,7 +124,7 @@ task writeWrapperModJson {
             'painters_blocks': "=$project.version"
         ]
         if (LIBMULTIPART_ENABLED) {
-            content.depends.painters_blocks_multipart = "=$project.version"
+            content.depends.painters_blocks_multiparts = "=$project.version"
         }
         def json = groovy.json.JsonOutput.toJson content
         wrapperModJsonFile.parentFile.mkdirs()
