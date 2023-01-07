@@ -25,7 +25,7 @@
 
   "depends": {
     "painters_blocks": "=$version",
-    "libmultipart": ">=0.7.2"
+    "libmultipart": ">=0.8.0"
   },
 
   "custom": {

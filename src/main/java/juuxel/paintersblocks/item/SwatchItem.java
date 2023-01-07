@@ -16,7 +16,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
@@ -85,7 +84,7 @@ public class SwatchItem extends Item implements PbDyeableItem {
                 player.getInventory().offerOrDrop(dyed);
             }
 
-            player.sendMessage(new TranslatableText("item.dyed").formatted(Formatting.ITALIC), true);
+            player.sendMessage(Text.translatable("item.dyed").formatted(Formatting.ITALIC), true);
         }
 
         return ActionResult.CONSUME;

@@ -15,7 +15,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
@@ -78,11 +77,11 @@ public interface PbDyeableItem extends DyeableItem {
             @Nullable Item dye = PaintableItem.DYES_BY_RGB.get(color);
             String colorStr = Integer.toHexString(color);
             MutableText text = dye != null
-                ? new TranslatableText("tooltip.painters_blocks.dye_color", colorStr, dye.getName())
-                : new TranslatableText("tooltip.painters_blocks.color", colorStr);
+                ? Text.translatable("tooltip.painters_blocks.dye_color", colorStr, dye.getName())
+                : Text.translatable("tooltip.painters_blocks.color", colorStr);
             tooltip.add(text.styled(style -> style.withColor(color)));
         } else {
-            tooltip.add(new TranslatableText("tooltip.painters_blocks.undyed").styled(style -> style.withItalic(true).withColor(Formatting.DARK_GRAY)));
+            tooltip.add(Text.translatable("tooltip.painters_blocks.undyed").styled(style -> style.withItalic(true).withColor(Formatting.DARK_GRAY)));
         }
     }
 
