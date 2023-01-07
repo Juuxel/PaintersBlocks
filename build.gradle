@@ -15,24 +15,28 @@ group = project.maven_group
 final def LIBMULTIPART_ENABLED = true
 
 sourceSets {
-    multiparts {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
+    if (LIBMULTIPART_ENABLED) {
+        multiparts {
+            compileClasspath += main.compileClasspath
+            runtimeClasspath += main.runtimeClasspath
+        }
     }
 
     create 'wrapper'
 }
 
 loom {
-    runs {
-        lmpClient {
-            inherit client
-            configName = "Minecraft Client with LMP"
-            source sourceSets.multiparts
+    if (LIBMULTIPART_ENABLED) {
+        runs {
+            lmpClient {
+                inherit client
+                configName = "Minecraft Client with LMP"
+                source sourceSets.multiparts
+            }
         }
-    }
 
-    createRemapConfigurations sourceSets.multiparts
+        createRemapConfigurations sourceSets.multiparts
+    }
 }
 
 repositories {
@@ -62,15 +66,18 @@ dependencies {
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
-    multipartsImplementation sourceSets.main.output
-    modMultipartsImplementation "alexiil.mc.lib:libmultipart-all:$project.libmultipart_version"
-
     if (LIBMULTIPART_ENABLED) {
+        multipartsImplementation sourceSets.main.output
+        modMultipartsImplementation "alexiil.mc.lib:libmultipart-all:$project.libmultipart_version"
+
         include "alexiil.mc.lib:libmultipart-all:$project.libmultipart_version"
     }
 }
 
-for (def sourceSet : [sourceSets.main, sourceSets.multiparts]) {
+def modSourceSets = [sourceSets.main]
+if (LIBMULTIPART_ENABLED) modSourceSets += sourceSets.multiparts
+
+for (def sourceSet : modSourceSets) {
     tasks.named(sourceSet.getTaskName('process', 'Resources'), ProcessResources) {
         inputs.property "version", project.version
 
@@ -131,16 +138,18 @@ task writeWrapperModJson {
     }
 }
 
-task multipartsJar(type: Jar) {
-    archiveClassifier = 'dev-multiparts'
-    destinationDirectory = jar.destinationDirectory
-    from sourceSets.multiparts.output
-}
+if (LIBMULTIPART_ENABLED) {
+    task multipartsJar(type: Jar) {
+        archiveClassifier = 'dev-multiparts'
+        destinationDirectory = jar.destinationDirectory
+        from sourceSets.multiparts.output
+    }
 
-task remapMultipartsJar(type: net.fabricmc.loom.task.RemapJarTask) {
-    archiveClassifier = 'multiparts'
-    dependsOn multipartsJar
-    inputFile = multipartsJar.archiveFile
+    task remapMultipartsJar(type: net.fabricmc.loom.task.RemapJarTask) {
+        archiveClassifier = 'multiparts'
+        dependsOn multipartsJar
+        inputFile = multipartsJar.archiveFile
+    }
 }
 
 task wrapperJar(type: Jar) {
