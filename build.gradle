@@ -143,6 +143,7 @@ if (LIBMULTIPART_ENABLED) {
         archiveClassifier = 'multiparts'
         dependsOn multipartsJar
         inputFile = multipartsJar.archiveFile
+        classpath.from sourceSets.multiparts.compileClasspath
         addNestedDependencies = false
     }
 }
