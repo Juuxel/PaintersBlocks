@@ -34,7 +34,7 @@ public final class PbItems {
     }).build();
 
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(PaintersBlocks.id("group"))
-        .entries((enabledFeatures, entries, operatorEnabled) -> {
+        .entries((displayContext, entries) -> {
             for (Item item : ALL_DYEABLE_ITEMS) {
                 PbDyeableItem.appendStacks(item, entries::add);
             }

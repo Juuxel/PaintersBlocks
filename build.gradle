@@ -1,7 +1,7 @@
 plugins {
-    id 'fabric-loom' version '1.0-SNAPSHOT'
-    id 'io.github.juuxel.loom-quiltflower' version '1.7.4'
-    id 'org.cadixdev.licenser' version '0.6.1'
+    id 'fabric-loom' version '1.2-SNAPSHOT'
+    id 'io.github.juuxel.loom-quiltflower' version '1.10.0'
+    id 'net.kyori.indra.licenser.spotless' version '3.1.1'
     id 'maven-publish'
 }
 
@@ -12,7 +12,7 @@ archivesBaseName = project.archives_base_name
 version = "$project.mod_version+$project.minecraft_version"
 group = project.maven_group
 
-final def LIBMULTIPART_ENABLED = false
+final def LIBMULTIPART_ENABLED = true
 
 sourceSets {
     if (LIBMULTIPART_ENABLED) {
@@ -46,8 +46,8 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
     maven {
-        name = "BuildCraft"
-        url = "https://mod-buildcraft.com/maven"
+        name = "AlexIIL"
+        url = "https://maven.alexiil.uk"
 
         content {
             includeGroup "alexiil.mc.lib"
@@ -175,8 +175,9 @@ assemble {
     dependsOn remapWrapperJar
 }
 
-license {
-    header = file('HEADER.txt')
+indraSpotlessLicenser {
+    licenseHeaderFile 'HEADER.txt'
+    newLine true
 }
 
 // configure the maven publication

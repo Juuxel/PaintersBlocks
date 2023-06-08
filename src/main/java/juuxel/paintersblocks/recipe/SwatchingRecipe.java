@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -55,7 +56,7 @@ public class SwatchingRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inventory) {
+    public ItemStack craft(CraftingInventory inventory, DynamicRegistryManager registryManager) {
         @Nullable Inputs inputs = findInputs(inventory);
         if (inputs == null) return ItemStack.EMPTY;
 
