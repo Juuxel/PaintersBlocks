@@ -198,13 +198,15 @@ publishing {
 }
 
 tasks.register('storeGhPublishingDetails') {
-    def output = file(System.getenv('GITHUB_OUTPUT'))
-    def details = [
-        version: project.mod_version,
-        title: "PB $project.mod_version for $project.minecraft_version",
-        file: tasks.remapWrapperJar.archiveFile.get().asFile.absolutePath
-    ]
-    details.forEach { key, value ->
-        output << "$key=$value\n"
+    doLast {
+        def output = file(System.getenv('GITHUB_OUTPUT'))
+        def details = [
+            version: project.mod_version,
+            title  : "PB $project.mod_version for $project.minecraft_version",
+            file   : tasks.remapWrapperJar.archiveFile.get().asFile.absolutePath
+        ]
+        details.forEach { key, value ->
+            output << "$key=$value\n"
+        }
     }
 }
