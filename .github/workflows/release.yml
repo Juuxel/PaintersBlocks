@@ -41,5 +41,5 @@ jobs:
       - name: ☁ Mirror release
         run: ./mirror-upload/target/release/mirror_upload -c mirror-upload.toml ${{ steps.details.outputs.version }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
