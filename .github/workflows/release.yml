@@ -1,0 +1,43 @@
+name: Release
+on: workflow_dispatch
+jobs:
+  build:
+    name: 🛠 Build mod and release on GitHub
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.details.outputs.version }}
+    steps:
+      - name: 📦 Check out mod repository
+        uses: actions/checkout@v3
+      - name: 🐘 Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: 🔨 Build mod
+        run: ./gradlew build
+      - name: 📓 Get publishing details
+        run: ./gradlew storeGhPublishingDetails
+        id: details
+      - name: 🐱 Publish to GitHub
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: ${{ github.workspace }}/CHANGELOG.md
+          tag_name: ${{ steps.details.outputs.version }}
+          name: ${{ steps.details.outputs.title }}
+          files: build/libs/*.jar
+  mirror:
+    name: 📮 Mirror release
+    needs: build
+    runs-on: ubuntu-latest
+    container: rust:1.70.0
+    steps:
+      - name: 📦 Check out mirror-upload
+        uses: actions/checkout@v3
+        with:
+          repository: Juuxel/mirror-upload
+          ref: "1.0.0"
+      - name: ☁ Mirror release
+        run: |
+          cargo build --release
+          ./target/release/mirror_upload -c mirror-upload.toml ${{ needs.build.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}

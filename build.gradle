@@ -196,3 +196,14 @@ publishing {
         // retrieving dependencies.
     }
 }
+
+tasks.register('storeGhPublishingDetails') {
+    def output = file(System.getenv('GITHUB_OUTPUT'))
+    def details = [
+        version: project.mod_version,
+        title: "PB $project.mod_version for $project.minecraft_version"
+    ]
+    details.forEach { key, value ->
+        output << "$key=$value\n"
+    }
+}
