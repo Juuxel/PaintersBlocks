@@ -1,14 +1,24 @@
 name: Release
 on: workflow_dispatch
 jobs:
-  build:
-    name: 🛠 Build mod and release on GitHub
+  release:
+    name: 🛠 Build and release mod
     runs-on: ubuntu-latest
+    container: rust:1.70.0
     outputs:
       version: ${{ steps.details.outputs.version }}
     steps:
       - name: 📦 Check out mod repository
         uses: actions/checkout@v3
+      - name: 📦 Check out mirror-upload
+        uses: actions/checkout@v3
+        with:
+          repository: Juuxel/mirror-upload
+          ref: "1.0.0"
+          path: mirror-upload
+      - name: ⚙ Build mirror-upload
+        run: cargo build --release
+        working-directory: ./mirror-upload
       - name: 🐘 Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
       - name: ☕ Setup Java
@@ -28,21 +38,8 @@ jobs:
           tag_name: ${{ steps.details.outputs.version }}
           name: ${{ steps.details.outputs.title }}
           files: ${{ steps.details.outputs.file }}
-  mirror:
-    name: 📮 Mirror release
-    needs: build
-    runs-on: ubuntu-latest
-    container: rust:1.70.0
-    steps:
-      - name: 📦 Check out mirror-upload
-        uses: actions/checkout@v3
-        with:
-          repository: Juuxel/mirror-upload
-          ref: "1.0.0"
       - name: ☁ Mirror release
-        run: |
-          cargo build --release
-          ./target/release/mirror_upload -c mirror-upload.toml ${{ needs.build.outputs.version }}
+        run: ./mirror-upload/target/release/mirror_upload -c mirror-upload.toml ${{ steps.details.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
