@@ -9,7 +9,8 @@ package juuxel.paintersblocks.recipe;
 import juuxel.paintersblocks.item.PbDyeableItem;
 import juuxel.paintersblocks.item.PbItems;
 import juuxel.paintersblocks.item.SwatchItem;
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
@@ -26,7 +27,7 @@ public class SwatchingRecipe extends SpecialCraftingRecipe {
     }
 
     @Nullable
-    private Inputs findInputs(CraftingInventory inventory) {
+    private Inputs findInputs(Inventory inventory) {
         ItemStack clean = ItemStack.EMPTY;
         ItemStack dyed = ItemStack.EMPTY;
 
@@ -51,12 +52,12 @@ public class SwatchingRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inventory, World world) {
+    public boolean matches(RecipeInputInventory inventory, World world) {
         return findInputs(inventory) != null;
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inventory, DynamicRegistryManager registryManager) {
+    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
         @Nullable Inputs inputs = findInputs(inventory);
         if (inputs == null) return ItemStack.EMPTY;
 

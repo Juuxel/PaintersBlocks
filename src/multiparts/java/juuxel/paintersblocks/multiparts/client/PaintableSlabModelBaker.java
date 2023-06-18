@@ -39,10 +39,10 @@ public final class PaintableSlabModelBaker implements PartModelBaker<PaintableSl
 
         ctx.pushTransform(quad -> {
             int color = 0xFF_000000 | key.color;
-            quad.spriteColor(0, color, color, color, color);
+            quad.color(color, color, color, color);
             return true;
         });
-        ctx.fallbackConsumer().accept(model);
+        ctx.bakedModelConsumer().accept(model);
         ctx.popTransform();
     }
 }

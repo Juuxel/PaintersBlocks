@@ -17,7 +17,11 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
 import java.util.List;
@@ -33,24 +37,29 @@ public final class PbItems {
         builder.add(SWATCH);
     }).build();
 
-    public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder(PaintersBlocks.id("group"))
-        .entries((displayContext, entries) -> {
-            for (Item item : ALL_DYEABLE_ITEMS) {
-                PbDyeableItem.appendStacks(item, entries::add);
-            }
-        })
-        .icon(() -> {
-            ItemStack stack = new ItemStack(PbBlocks.PAINTERS_BRICKS);
-            PbDyeableItem.setColor(stack, DyeColor.LIME);
-            return stack;
-        })
-        .build();
+    public static final RegistryKey<ItemGroup> ITEM_GROUP =
+        RegistryKey.of(RegistryKeys.ITEM_GROUP, PaintersBlocks.id("group"));
 
     public static <I extends Item> I register(String id, I item) {
         return Registry.register(Registries.ITEM, PaintersBlocks.id(id), item);
     }
 
     public static void init() {
+        Registry.register(Registries.ITEM_GROUP, ITEM_GROUP,
+            FabricItemGroup.builder()
+                .displayName(Text.translatable(Util.createTranslationKey("itemGroup", ITEM_GROUP.getValue())))
+                .entries((displayContext, entries) -> {
+                    for (Item item : ALL_DYEABLE_ITEMS) {
+                        PbDyeableItem.appendStacks(item, entries::add);
+                    }
+                })
+                .icon(() -> {
+                    ItemStack stack = new ItemStack(PbBlocks.PAINTERS_BRICKS);
+                    PbDyeableItem.setColor(stack, DyeColor.LIME);
+                    return stack;
+                })
+                .build());
+
         for (Item item : ALL_DYEABLE_ITEMS) {
             addCauldronBehavior(item);
         }

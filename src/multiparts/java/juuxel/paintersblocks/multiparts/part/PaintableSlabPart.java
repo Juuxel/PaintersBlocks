@@ -29,7 +29,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameterSet;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -146,19 +146,19 @@ public class PaintableSlabPart extends AbstractPart implements SwatchItem.DyeTar
     }
 
     @Override
-    public void addDrops(ItemDropTarget target, LootContext context) {
+    public void addDrops(ItemDropTarget target, LootContextParameterSet parameters) {
         boolean canHarvest;
 
         // TODO: Don't rely on the block's mineable tags, requires part tags
-        if (context.get(LootContextParameters.THIS_ENTITY) instanceof PlayerEntity player) {
+        if (parameters.get(LootContextParameters.THIS_ENTITY) instanceof PlayerEntity player) {
             canHarvest = player.canHarvest(getClosestBlockState());
         } else {
             // noinspection ConstantConditions: context.get cannot be null for a required parameter
-            canHarvest = context.get(LootContextParameters.TOOL).isSuitableFor(getClosestBlockState());
+            canHarvest = parameters.get(LootContextParameters.TOOL).isSuitableFor(getClosestBlockState());
         }
 
         if (canHarvest) {
-            target.dropAll(context.getWorld().getServer().getLootManager().getTable(getLootTableId()).generateLoot(context));
+            target.dropAll(parameters.getWorld().getServer().getLootManager().getLootTable(getLootTableId()).generateLoot(parameters));
         }
     }
 
