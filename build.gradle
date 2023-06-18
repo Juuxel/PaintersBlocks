@@ -113,7 +113,7 @@ import net.fabricmc.loom.task.RemapJarTask
 def wrapperModJsonTemplate = file('src/wrapper/fabric.mod.json')
 def wrapperModJsonFile = file('build/wrapper/fabric.mod.json')
 
-task writeWrapperModJson {
+tasks.register('writeWrapperModJson') {
     inputs.file wrapperModJsonTemplate
     inputs.property 'version', project.version
     inputs.property 'libmultipartEnabled', LIBMULTIPART_ENABLED
@@ -135,13 +135,13 @@ task writeWrapperModJson {
 }
 
 if (LIBMULTIPART_ENABLED) {
-    task multipartsJar(type: Jar) {
+    tasks.register('multipartsJar', Jar) {
         archiveClassifier = 'dev-multiparts'
         destinationDirectory = jar.destinationDirectory
         from sourceSets.multiparts.output
     }
 
-    task remapMultipartsJar(type: RemapJarTask) {
+    tasks.register('remapMultipartsJar', RemapJarTask) {
         archiveClassifier = 'multiparts'
         dependsOn multipartsJar
         inputFile = multipartsJar.archiveFile
@@ -150,7 +150,7 @@ if (LIBMULTIPART_ENABLED) {
     }
 }
 
-task wrapperJar(type: Jar) {
+tasks.register('wrapperJar', Jar) {
     archiveClassifier = 'dev-wrapper'
     destinationDirectory = jar.destinationDirectory
     dependsOn writeWrapperModJson
@@ -162,7 +162,7 @@ task wrapperJar(type: Jar) {
     }
 }
 
-task remapWrapperJar(type: RemapJarTask) {
+tasks.register('remapWrapperJar', RemapJarTask) {
     dependsOn wrapperJar
     inputFile = wrapperJar.archiveFile
 
