@@ -108,6 +108,8 @@ remapJar {
     addNestedDependencies = false
 }
 
+import net.fabricmc.loom.task.RemapJarTask
+
 def wrapperModJsonTemplate = file('src/wrapper/fabric.mod.json')
 def wrapperModJsonFile = file('build/wrapper/fabric.mod.json')
 
@@ -139,7 +141,7 @@ if (LIBMULTIPART_ENABLED) {
         from sourceSets.multiparts.output
     }
 
-    task remapMultipartsJar(type: net.fabricmc.loom.task.RemapJarTask) {
+    task remapMultipartsJar(type: RemapJarTask) {
         archiveClassifier = 'multiparts'
         dependsOn multipartsJar
         inputFile = multipartsJar.archiveFile
@@ -160,7 +162,7 @@ task wrapperJar(type: Jar) {
     }
 }
 
-task remapWrapperJar(type: net.fabricmc.loom.task.RemapJarTask) {
+task remapWrapperJar(type: RemapJarTask) {
     dependsOn wrapperJar
     inputFile = wrapperJar.archiveFile
 
@@ -169,6 +171,11 @@ task remapWrapperJar(type: net.fabricmc.loom.task.RemapJarTask) {
     if (LIBMULTIPART_ENABLED) {
         nestedJars.from remapMultipartsJar
     }
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
 }
 
 assemble {
